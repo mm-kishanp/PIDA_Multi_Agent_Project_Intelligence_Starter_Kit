@@ -9,7 +9,11 @@ on:
       - ".claude/skills/**"
       - ".github/skills/**"
       - ".agent/skills/**"
-      - "scripts/sync-skills.py"
+      - "skills/**"
+      - ".claude-plugin/**"
+      - ".claude/agents/**"
+      - "scripts/**"
+      - "tests/**"
   workflow_dispatch:
 
 permissions:
@@ -25,3 +29,7 @@ jobs:
           python-version: "3.x"
       - name: Check skill copies match .agents/skills
         run: python scripts/sync-skills.py --check
+      # Present only in the PIDA kit itself, not in repositories PIDA is installed into.
+      - name: Test installer and plugin manifests
+        if: hashFiles('tests/test_pida_scripts.py') != ''
+        run: python -m unittest discover -s tests -v

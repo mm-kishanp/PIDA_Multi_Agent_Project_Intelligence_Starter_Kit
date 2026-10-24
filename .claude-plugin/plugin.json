@@ -1,0 +1,27 @@
+{
+  "name": "pida",
+  "displayName": "PIDA: Project Intelligence & Development Agent",
+  "version": "1.0.0",
+  "description": "Evidence-based project intelligence for any repository: audit the codebase into a living knowledge base, plan work as a verifiable backlog, implement tasks with tests, review diffs, track clients, and keep docs current.",
+  "author": {
+    "name": "mm-kishanp"
+  },
+  "homepage": "https://github.com/mm-kishanp/PIDA_Multi_Agent_Project_Intelligence_Starter_Kit",
+  "repository": "https://github.com/mm-kishanp/PIDA_Multi_Agent_Project_Intelligence_Starter_Kit",
+  "keywords": [
+    "claude-code",
+    "claude-skills",
+    "project-intelligence",
+    "codebase-audit",
+    "documentation",
+    "backlog",
+    "code-review",
+    "subagents"
+  ],
+  "skills": ["./.agents/skills/"],
+  "agents": [
+    "./.claude/agents/pida-auditor.md",
+    "./.claude/agents/pida-reviewer.md",
+    "./.claude/agents/pida-test-runner.md"
+  ]
+}

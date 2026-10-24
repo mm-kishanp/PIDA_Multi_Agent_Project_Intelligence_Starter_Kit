@@ -2,7 +2,7 @@
 
 ## 1. Install
 
-Copy/merge these files into the target repository. Preserve existing `CLAUDE.md`, `.claude/settings.json`, skills, hooks, and commands. If a target file already exists, merge the content manually or ask Claude Code to integrate without losing existing rules.
+Use one of the install options in the [README](README.md#step-1-install): ask Claude with the repository link, install the Claude Code plugin (`/plugin install pida@pida`, then `/pida:pida-setup` in each repository), or run `python scripts/install-pida.py --target <repo> --tools <tools>`. None of them overwrites existing files. Preserve existing `CLAUDE.md`, `.claude/settings.json`, skills, hooks, and commands: when the installer reports a file as `merge`, merge the content manually or ask Claude Code to integrate it without losing existing rules.
 
 Start Claude Code at the repository root:
 ```bash

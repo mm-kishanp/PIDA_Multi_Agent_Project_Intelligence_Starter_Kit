@@ -2,8 +2,10 @@
 """Sync PIDA skills from .agents/skills to supported native skill folders.
 
 Copies every file in each skill directory present in .agents/skills (SKILL.md,
-templates, and other supporting files). Does not delete files or touch
-unrelated skill names. Review git diff after running.
+templates, and other supporting files) into each native skill root that exists,
+so a repository that installed only some adapters is not given the others.
+Does not delete files or touch unrelated skill names. Review git diff after
+running.
 
 Use --check to report drift without writing anything. It exits 1 when a copy
 is missing or differs from the source, so it can run in CI.
@@ -36,12 +38,13 @@ def main():
         raise SystemExit("Missing .agents/skills; nothing synced.")
 
     skills = skill_dirs()
+    targets = [t for t in TARGETS if t.is_dir()]
     drift = []
     extras = []
     copied = 0
     for skill_dir in skills:
         source_files = files_in(skill_dir)
-        for target_root in TARGETS:
+        for target_root in targets:
             target_dir = target_root / skill_dir.name
             for rel in source_files:
                 src, dst = skill_dir / rel, target_dir / rel
@@ -65,10 +68,10 @@ def main():
         if drift:
             print(f"{len(drift)} skill file(s) out of sync. Run `python scripts/sync-skills.py`.")
             return 1
-        print(f"All {len(skills)} skills in sync across {len(TARGETS)} native skill roots.")
+        print(f"All {len(skills)} skills in sync across {len(targets)} native skill roots.")
         return 0
 
-    print(f"Synced {copied} changed file(s) for {len(skills)} skills across {len(TARGETS)} native skill roots.")
+    print(f"Synced {copied} changed file(s) for {len(skills)} skills across {len(targets)} native skill roots.")
     print("Review `git diff` before committing.")
     return 0
 
