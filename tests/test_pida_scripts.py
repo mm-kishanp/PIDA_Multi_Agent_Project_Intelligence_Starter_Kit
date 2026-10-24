@@ -50,7 +50,8 @@ class Install(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         for rel in ("AGENTS.md", "CLAUDE.md", ".claude/skills/project-audit/SKILL.md",
                     ".claude/agents/pida-auditor.md", ".agents/skills/project-audit/templates/client-matrix.md",
-                    "docs/project-intelligence/client-matrix.md", "project-management/BACKLOG.md",
+                    "docs/project-intelligence/client-matrix.md", "docs/project-intelligence/project.md",
+                    ".agents/skills/project-audit/templates/sub-project.md", "project-management/BACKLOG.md",
                     "scripts/doc-freshness.py"):
             self.assertTrue((self.target / rel).is_file(), rel)
         for rel in (".github", ".agent", ".claude-plugin", "skills", "tests", "README.md"):

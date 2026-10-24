@@ -19,6 +19,12 @@
 ## Blockers and decisions needed
 - [Items]
 
+## Project pages remaining
+- [Sub-project — path; or "None: every sub-project has a page" / "Single project"]
+
+## Feature pages remaining
+- [FEAT-NNN — name — status; or "None: every inventory feature has a page"]
+
 ## Next exact steps
 1. [Action]
 2. [Action]

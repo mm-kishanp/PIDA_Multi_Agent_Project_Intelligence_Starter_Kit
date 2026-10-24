@@ -18,9 +18,9 @@ You audit one area of a repository for the PIDA project-intelligence workflow. T
 ## Report format
 Return Markdown with these sections, citing paths instead of pasting large code blocks:
 1. **Area and scope inspected**, plus **excluded or unread** paths and why.
-2. **Stack and entry points** found in this area.
+2. **Stack, entry points, and sub-projects** found in this area. For each sub-project (a unit built, run, deployed, or published on its own): name, path, type, manifest, entry point, build/run/test commands, dependencies on other sub-projects, and what it exposes. The caller writes a page for each.
 3. **Findings**: table of Finding | Classification | Confidence | Evidence.
-4. **Feature candidates**: table of Feature | Status (Implemented / Partial / Planned / Deprecated / Unknown) | Evidence | Gaps.
+4. **Feature candidates**: table of Feature | Status (Implemented / Partial / Planned / Deprecated / Unknown) | Entry points | Data touched | Tests | Evidence | Gaps. The caller writes a feature page for each, so include enough per feature to fill one.
 5. **Security-sensitive surfaces**: auth, authorization, tenant isolation, input handling, secret locations, sensitive logging.
 6. **Data, API, and integration touchpoints**.
 7. **Client-specific code**: clients referenced in this area, how each is selected at runtime, client-specific paths, config keys, and flags, and which features differ per client (discovery checklist section 10). If the caller gave a client list, search for each client and report hits and misses.

@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Project documentation
 
-Keeps `docs/project-intelligence/` accurate, complete, and traceable to source. Input: a scope from the user, such as "the whole knowledge base", "the billing feature", "api-catalog", or "everything changed in the last sprint". With no scope, complete every page that is missing, still a template, or marked `Unknown — not yet audited`.
+Keeps `docs/project-intelligence/` accurate, complete, and traceable to source. Input: a scope from the user, such as "the whole knowledge base", "the billing feature", "api-catalog", or "everything changed in the last sprint". With no scope, complete every page that is missing, still a template, or marked `Unknown — not yet audited`, including `project.md`, a page for every sub-project that lacks one, and a feature page for every inventory feature that lacks one (start with the lists under *Project pages remaining* and *Feature pages remaining* in `PROGRESS.md`, if any). When the scope names a feature or area, create or update the feature pages for every feature in it.
 
 ## Shared PIDA resources
 
@@ -17,8 +17,8 @@ In the skills folder (for example `.claude/skills/` or `.agents/skills/`):
 
 ## Before you start
 
-1. Read `AGENTS.md` / `CLAUDE.md`, then `docs/project-intelligence/README.md`, `project-overview.md`, and `repository-map.md`.
-2. If the knowledge base is missing or still templates, create `docs/project-intelligence/` and the pages in scope from the templates. If `project-overview.md` and `repository-map.md` are not filled, fill them first using the discovery checklist, because every other page depends on them. Recommend `/project-audit` when the scope is the whole project and no audit has run.
+1. Read `AGENTS.md` / `CLAUDE.md`, then `docs/project-intelligence/README.md`, `project.md`, `project-overview.md`, and `repository-map.md`.
+2. If the knowledge base is missing or still templates, create `docs/project-intelligence/` and the pages in scope from the templates. If `project.md`, `project-overview.md`, and `repository-map.md` are not filled, fill them first using the discovery checklist, because every other page depends on them. Recommend `/project-audit` when the scope is the whole project and no audit has run.
 3. Find existing authoritative docs (ADRs, OpenAPI specs, wiki exports, READMEs). Link to them rather than copying.
 
 ## Workflow
@@ -35,8 +35,10 @@ In the skills folder (for example `.claude/skills/` or `.agents/skills/`):
 
 ## Page-specific guidance
 
-- **Project overview**: start with what the project is, for whom, and why, in plain language. Include the domain glossary and verified run commands. A new team member should understand the project from this page alone.
-- **Feature documentation**: for each feature document user outcome, users and permissions, entry points, main flow and error cases (Given/When/Then), data touched, integrations and side effects, configuration and flags, tests, and gaps. Use one inventory row for simple features. Create `features/FEAT-NNN-<slug>.md` from `feature.md` for complex or critical features, and link it from the inventory.
+- **Project page (`project.md`)**: the plain-language explanation of the project: what it is, the problem it solves, who uses it and how, what it does (linked to features), how it is organized into sub-projects, its clients, and its current state. Write it so a new team member, tester, or product owner understands the project from this page alone, without technical background.
+- **Sub-project pages (`projects/<slug>/project.md`)**: when the repository has more than one sub-project, one page each from `sub-project.md`: what it is and why it is separate, responsibilities, features, entry point and runtime, build/run/test commands, deployment, dependencies and dependents, interfaces, data, configuration names, ownership, and risks. List every sub-project in `project.md`. Follow *Project pages* in the guide.
+- **Project overview**: the technical summary. One-line description linking to `project.md`, domain glossary, stack, runtime components linked to sub-project pages, verified run commands, maturity.
+- **Feature documentation**: every feature gets a row in `feature-inventory.md` **and** its own page, `features/FEAT-NNN-<slug>.md`, created from `feature.md` and linked from the row's `Page` column. On each page document the user outcome, users and permissions, entry points, main flow and error cases (Given/When/Then), data touched, integrations and side effects, configuration and flags, client availability, tests, and gaps. Simple or `Planned` features may have short pages; critical ones get every section filled. Follow *Feature pages* in the guide. When a run cannot finish every page, update *Feature pages remaining* in `PROGRESS.md`.
 - **Requirements**: separate business goals, roles, functional requirements, non-functional requirements, and constraints. Requirements reverse-engineered from code are `Inferred` until a person confirms them.
 - **Architecture**: describe current state only, unless asked for a proposal. Use Mermaid for 2–5 key flows. Follow the architecture skill for depth.
 - **API catalog**: method, route or topic, auth, request and response schema, status codes, validation, side effects, evidence. Follow the api-development skill for depth.
@@ -52,4 +54,4 @@ In the skills folder (for example `.claude/skills/` or `.agents/skills/`):
 
 ## Report
 
-Pages created, pages updated, sections still Unknown and why, new questions and risks, and suggested follow-up.
+Pages created, pages updated, sub-project and feature pages written and any still remaining, sections still Unknown and why, new questions and risks, and suggested follow-up.

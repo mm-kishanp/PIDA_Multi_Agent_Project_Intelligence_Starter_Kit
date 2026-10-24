@@ -126,7 +126,7 @@ Detailed setup notes: [PIDA-SETUP.md](PIDA-SETUP.md). Multi-tool notes: [MULTI-A
 Takes a few minutes to much longer depending on repository size. When it finishes:
 
 1. Read the audit report and `docs/project-intelligence/open-questions.md`, and answer the questions only you can answer.
-2. Skim `project-overview.md` and `feature-inventory.md` to confirm PIDA understood the project.
+2. Read `project.md` (and the `projects/` pages if your repository has several apps or services) and skim `feature-inventory.md` to confirm PIDA understood the project.
 3. Plan your next piece of work:
 
    ```text
@@ -290,7 +290,9 @@ PIDA stores client **names, codes, and behavior only**, never contacts, contract
 ```text
 docs/project-intelligence/
   README.md                  index and scope of the knowledge base
-  project-overview.md        what the project is, users, glossary, stack, how to run it
+  project.md                 plain-language explanation of the project: start here
+  projects/<name>/project.md one page per sub-project (app, service, library, worker), when there are several
+  project-overview.md        technical summary: glossary, stack, runtime components, how to run it
   repository-map.md          where everything lives
   feature-inventory.md       every capability: status, clients, evidence, tests
   requirements.md            goals, roles, functional and non-functional requirements
@@ -303,7 +305,7 @@ docs/project-intelligence/
   quality-and-deployment.md  setup, quality gates, CI/CD, environments, rollback
   open-questions.md          unknowns that need an answer
   analysis-log.md            history of audits and refreshes
-  features/FEAT-NNN-*.md     deep pages for complex features (only when needed)
+  features/FEAT-NNN-*.md     one page per feature: behavior, entry points, data, clients, tests, gaps
 project-management/
   BACKLOG.md                 PIDA-NNN tasks with acceptance criteria and test plans
   RISKS.md                   R-NNN risks with likelihood, impact, mitigation

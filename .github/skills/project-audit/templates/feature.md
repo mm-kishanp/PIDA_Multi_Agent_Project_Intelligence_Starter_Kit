@@ -4,7 +4,9 @@ Last reviewed: YYYY-MM-DD
 
 - Status: Implemented / Partial / Planned / Deprecated / Unknown
 - Confidence: High / Medium / Low
-- Inventory row: `feature-inventory.md`
+- Inventory row: [feature-inventory.md](../feature-inventory.md)
+- Clients: All / CLIENT-NNN list / Not applicable
+- Related: [FR-NNN requirements, API endpoints, data entities, INT-NNN integrations]
 
 ## User outcome
 [What a user can achieve with this feature and why it matters.]

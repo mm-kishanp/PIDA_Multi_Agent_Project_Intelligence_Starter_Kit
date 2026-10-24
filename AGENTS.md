@@ -22,8 +22,8 @@ Do not claim a feature exists because a README, ticket, TODO, or mockup describe
 
 ## Shared knowledge
 Use `docs/project-intelligence/` unless the repository has an equivalent source of truth. Maintain, as relevant:
-- project overview and repository map;
-- feature inventory and requirements;
+- `project.md` (plain-language explanation of the project), one `projects/<slug>/project.md` per sub-project when there are several, the project overview, and the repository map;
+- feature inventory, one page per feature (`features/FEAT-NNN-<slug>.md`), and requirements;
 - architecture and architecture decisions;
 - data model, API catalog, and integrations;
 - client matrix (`client-matrix.md`) when behavior differs per client;

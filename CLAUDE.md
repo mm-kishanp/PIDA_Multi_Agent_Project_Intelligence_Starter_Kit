@@ -56,9 +56,11 @@ Do not claim an exhaustive scan if generated, inaccessible, ignored, or very lar
 Use `docs/project-intelligence/` as the default location for generated project knowledge, unless the repository already has an equivalent structure. Avoid duplicating authoritative docs. Link to existing sources and update them in place when appropriate.
 
 Maintain, as applicable:
+- `project.md`: plain-language explanation of the project, created for every repository
+- `projects/<slug>/project.md`: one page per sub-project (app, service, library, worker) when the repository has more than one
 - `project-overview.md`
 - `repository-map.md`
-- `feature-inventory.md`
+- `feature-inventory.md`, plus `features/FEAT-NNN-<slug>.md`: one page per feature, created during audits and docs runs and kept current when a feature changes
 - `requirements.md`
 - `architecture.md`
 - `data-model.md`

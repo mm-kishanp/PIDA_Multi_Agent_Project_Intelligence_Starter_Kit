@@ -15,7 +15,7 @@ In the skills folder: `project-audit/reference/knowledge-base-guide.md` (which p
 ## Before you start
 
 1. Run `git status --short --branch`. Note uncommitted changes that are not yours and leave them alone.
-2. Read `AGENTS.md` / `CLAUDE.md` and nested instructions near the code, then `project-overview.md`, `repository-map.md`, `quality-and-deployment.md`, and the knowledge pages relevant to the task (feature, API, data model, security, and `client-matrix.md` when the code serves several clients).
+2. Read `AGENTS.md` / `CLAUDE.md` and nested instructions near the code, then `project.md`, the page of each sub-project you will touch, `project-overview.md`, `repository-map.md`, `quality-and-deployment.md`, and the knowledge pages relevant to the task (feature, API, data model, security, and `client-matrix.md` when the code serves several clients).
 3. If the knowledge base or `project-management/` is missing, create them from the templates. At minimum fill `repository-map.md` and `quality-and-deployment.md` for the affected area, because you need the conventions and test commands. Recommend `/project-audit` for full coverage.
 4. Validate the docs against current code. When they disagree, the code wins: note the drift and fix the docs in step 10.
 
@@ -39,7 +39,8 @@ In the skills folder: `project-audit/reference/knowledge-base-guide.md` (which p
 
 | If you changed… | Update |
 |---|---|
-| user-visible behavior | `feature-inventory.md` (status, evidence, tests), feature page, `requirements.md` |
+| user-visible behavior | `feature-inventory.md` (status, evidence, tests), the feature's page in `features/` (create it if missing; a new feature gets a new `FEAT-NNN` row and page), `requirements.md` |
+| a sub-project's purpose, entry point, dependencies, interfaces, configuration, or deployment; or added a sub-project | its `projects/<slug>/project.md` (create it for a new sub-project) and the sub-project list in `project.md` |
 | routes, contracts, events | `api-catalog.md` |
 | schema, migrations, entities | `data-model.md` |
 | external calls or webhooks | `integrations.md` |

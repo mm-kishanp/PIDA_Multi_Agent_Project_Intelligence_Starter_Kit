@@ -9,10 +9,12 @@ Templates are in this skill's `templates/` folder. Paths in the **Target** colum
 | Template | Target | Owner skills |
 |---|---|---|
 | `project-intelligence-README.md` | `docs/project-intelligence/README.md` | project-audit |
+| `project.md` | `docs/project-intelligence/project.md` | project-audit, project-docs |
+| `sub-project.md` | `docs/project-intelligence/projects/<slug>/project.md`, one per sub-project when the repository has more than one | project-audit, project-docs, project-implement |
 | `project-overview.md` | `docs/project-intelligence/project-overview.md` | project-audit, project-docs |
 | `repository-map.md` | `docs/project-intelligence/repository-map.md` | project-audit |
 | `feature-inventory.md` | `docs/project-intelligence/feature-inventory.md` | project-audit, project-docs, project-implement |
-| `feature.md` | `docs/project-intelligence/features/FEAT-NNN-<slug>.md` (only for features that need more than one inventory row) | project-docs |
+| `feature.md` | `docs/project-intelligence/features/FEAT-NNN-<slug>.md`, one page per feature in the inventory | project-audit, project-docs, project-implement |
 | `requirements.md` | `docs/project-intelligence/requirements.md` | project-docs, project-plan |
 | `architecture.md` | `docs/project-intelligence/architecture.md` | architecture |
 | `data-model.md` | `docs/project-intelligence/data-model.md` | database-development |
@@ -33,7 +35,7 @@ Any skill that needs a page that does not exist yet creates it from the template
 ## Creation rules
 
 1. **Look for an equivalent first.** If the repository already has `ARCHITECTURE.md`, `docs/adr/`, an OpenAPI spec, an issue tracker, or similar, link to it from the PIDA page instead of copying it. Record the mapping in `docs/project-intelligence/README.md`. If the repository already keeps knowledge in a different folder, use that folder and tell the user.
-2. **Create folders as needed**: `docs/project-intelligence/`, `docs/project-intelligence/features/` (only when a feature page is written), and `project-management/`.
+2. **Create folders as needed**: `docs/project-intelligence/`, `docs/project-intelligence/features/`, `docs/project-intelligence/projects/<slug>/` (only when the repository has more than one sub-project), and `project-management/`.
 3. **Start from the template.** Keep its headings in order; add sections the project needs; delete sections only if they are irrelevant and say why in the scope line.
 4. **Fill every placeholder.** A finished section is one of:
    - evidence-backed content labelled Verified / Inferred / Unknown with source paths;
@@ -55,6 +57,28 @@ Any skill that needs a page that does not exist yet creates it from the template
 4. **Keep the matrix in step with features.** When a feature's availability or behavior differs by client, fill its row in *Feature availability by client* and the *Clients* column of `feature-inventory.md`.
 5. **Names and codes only.** Never store client contacts, contract terms, pricing, credentials, or customer records. If the user marks client names as confidential, use the codes found in source instead.
 
+## Project pages
+
+Every repository gets `project.md`, a plain-language explanation of the project for anyone joining it, including non-developers. `project-overview.md` is the technical summary and links to it. Do not repeat between the two: users, capabilities, and the problem solved belong in `project.md`; stack, runtime, glossary, and run commands belong in `project-overview.md`.
+
+When the repository contains more than one **sub-project**, each also gets `projects/<slug>/project.md`, created from `sub-project.md`, and `project.md` lists them all with links.
+
+1. **What counts as a sub-project.** A unit that is built, run, deployed, or published on its own and usually has its own manifest or entry point: a web app, API, worker, function app, mobile app, CLI, shared library or package, or a separately deployed infrastructure stack. Examples: each project in a `.sln`, each package in a workspace or monorepo, each service folder with its own Dockerfile or pipeline.
+2. **What does not.** Test projects (document them under the sub-project they test), generated or vendored code, and plain folders inside one deployable unit.
+3. **Slug.** The sub-project's name in lowercase kebab-case (`projects/billing-api/project.md`).
+4. **Single-project repositories** get only `project.md`; its *How it is organized* section says `Single project — <evidence>` and no `projects/` folder is created.
+5. **Large repositories.** With more sub-projects than can be documented well in one run (roughly more than 15), write pages for deployable applications and services first, then shared libraries, then the rest, and list the ones still without a page under *Project pages remaining* in `PROGRESS.md`.
+6. **Keep them current.** A change to a sub-project's purpose, entry point, dependencies, interfaces, configuration, or deployment updates its page in the same change. A new sub-project gets a new page and a row in `project.md`.
+
+## Feature pages
+
+Every feature in `feature-inventory.md` gets its own page, `features/FEAT-NNN-<slug>.md`, created from `feature.md`. `<slug>` is the feature name in lowercase kebab-case (`FEAT-007-csv-export.md`).
+
+1. **Link both ways.** The inventory's `Page` column links to the page; the page names its inventory row. Keep status, clients, and confidence identical in both places.
+2. **Depth follows the feature.** A simple or `Planned` feature can have a short page: outcome, status, evidence, and gaps, with the remaining sections marked `Not applicable — <reason>` or `Unknown — <what was checked>`. Critical features (authentication, payments, data deletion, tenant access, core business flows) get every section filled.
+3. **Large inventories.** When there are too many features to document well in one run (roughly more than 40), write pages in this order: critical features, then `Implemented` and `Partial`, then the rest. List the features still without a page under *Feature pages remaining* in `PROGRESS.md` so the next `/project-docs` run continues from there. Never create empty placeholder pages to hit a count.
+4. **Keep them current.** Any skill that changes a feature's behavior, status, tests, or client availability updates its page in the same change, and creates the page if it is missing.
+
 ## IDs
 
 Use stable, never-reused IDs: `FEAT-NNN` (features), `BR-NNN` (business goals), `FR-NNN` / `NFR-NNN` (requirements), `INT-NNN` (integrations), `CLIENT-NNN` (clients), `SEC-NNN` (security findings), `Q-NNN` (open questions), `R-NNN` (risks), `ADR-NNN` (decisions), `PIDA-NNN` (backlog tasks). Continue from the highest existing number.
@@ -63,9 +87,12 @@ Use stable, never-reused IDs: `FEAT-NNN` (features), `BR-NNN` (business goals), 
 
 | Page | Must answer | Main evidence |
 |---|---|---|
-| project-overview | What the project is, for whom, and why, in plain language; key capabilities linked to FEAT IDs; domain glossary; stack with versions; runtime components; how to run it locally; maturity and activity | README, manifests, entry points, domain models, routes and UI, Git history |
+| project | What the project is, for whom, and why, in plain language a non-developer understands; the problem it solves; users and their workflows; capabilities linked to FEAT IDs; a typical journey; every sub-project with a link to its page (or `Single project`); clients; current state; links onward | README, domain models, routes and UI, auth config, feature inventory, manifests, Git history |
+| `projects/<slug>/project` | One page per sub-project: what it is and why it is separate, responsibilities, features it owns or uses, entry point, runtime, build/run/test commands, deployment, dependencies and dependents, interfaces exposed and consumed, data, configuration names, ownership, risks | The sub-project's manifest, entry point, composition root, references to other sub-projects, tests, pipeline |
+| project-overview | One-line summary linking to `project.md`; domain glossary; stack with versions; runtime components linked to sub-project pages; how to run it locally; maturity and activity | README, manifests, entry points, domain models, Git history |
 | repository-map | Purpose of every top-level folder; entry points; manifests; test locations and commands; generated and excluded areas; conventions. A newcomer can find where to change any feature. | File tree, manifests, CODEOWNERS |
-| feature-inventory | One row per user-facing capability and significant internal capability (jobs, imports, admin tools), with status, evidence, tests, gaps | Routes, screens, navigation, CLI commands, jobs, permission definitions, tests; README claims only as leads |
+| feature-inventory | One row per user-facing capability and significant internal capability (jobs, imports, admin tools), with status, clients, a link to its feature page, evidence, tests, gaps | Routes, screens, navigation, CLI commands, jobs, permission definitions, tests; README claims only as leads |
+| features/FEAT-NNN-* | One page per inventory feature: user outcome, users and permissions, entry points, main flow and error cases as Given/When/Then, data touched, integrations and side effects, configuration and flags, client availability, tests, gaps. Depth per *Feature pages* | The feature's traced code path, tests, config, and client-specific code |
 | requirements | Business goals (usually Inferred), roles and permissions, functional requirements for key features as Given/When/Then, non-functional requirements visible in config (timeouts, limits, caching, retention), constraints | Auth config, feature behavior, configuration, docs |
 | architecture | Components and responsibilities, dependency direction, 2–5 key flows as Mermaid diagrams, trust boundaries, constraints, technical debt | Composition root, module references, traced flows |
 | data-model | Every data store; entities with keys, relationships, sensitive fields, and tenant/ownership rules; migration mechanism and latest migration; Mermaid `erDiagram` when there are more than three entities | ORM models, schema files, migrations |
@@ -98,3 +125,5 @@ Use stable, never-reused IDs: `FEAT-NNN` (features), `BR-NNN` (business goals), 
 3. Search the files you wrote for secret-like content: `password=`, `secret=`, `token=`, `AKIA`, `-----BEGIN`, `Server=`, `mongodb://`, `postgres://`. Remove any values.
 4. Confirm every Verified claim cites a path, and every Inferred claim gives a reason and confidence.
 5. Confirm every client the user named in this session appears in `client-matrix.md`.
+6. Confirm `project.md` lists every sub-project and each has an existing `projects/<slug>/project.md`, or is listed under *Project pages remaining* in `PROGRESS.md`.
+7. Confirm every inventory row links to an existing `features/FEAT-NNN-*.md` page, or is listed under *Feature pages remaining* in `PROGRESS.md`, and that every feature page matches an inventory row.

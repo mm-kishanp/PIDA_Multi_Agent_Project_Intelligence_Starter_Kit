@@ -13,6 +13,8 @@ This directory is the evidence-based knowledge base maintained by PIDA.
 - Blank templates for every page live in the templates folder of the `project-audit` skill (source: `.agents/skills/project-audit/templates/`).
 
 ## Suggested documents
+- `project.md` (plain-language explanation; start here)
+- `projects/<slug>/project.md` (one per sub-project, when there are several)
 - `project-overview.md`
 - `repository-map.md`
 - `feature-inventory.md`

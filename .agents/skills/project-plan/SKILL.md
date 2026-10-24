@@ -14,7 +14,7 @@ In the skills folder: `project-audit/reference/knowledge-base-guide.md` (file ma
 
 ## Before you start
 
-1. Read `AGENTS.md` / `CLAUDE.md`, `project-overview.md`, `repository-map.md`, `feature-inventory.md`, `requirements.md`, `architecture.md`, and `client-matrix.md` in `docs/project-intelligence/`, plus `project-management/BACKLOG.md`, `RISKS.md`, and `DECISIONS.md`.
+1. Read `AGENTS.md` / `CLAUDE.md`, `project.md` (and the pages of the sub-projects the goal touches), `project-overview.md`, `repository-map.md`, `feature-inventory.md`, `requirements.md`, `architecture.md`, and `client-matrix.md` in `docs/project-intelligence/`, plus `project-management/BACKLOG.md`, `RISKS.md`, and `DECISIONS.md`.
 2. If any are missing or still templates, discover the area the goal touches using the checklist. Create `project-management/` and its four files from the templates (removing example entries), and create the knowledge pages you need for this plan, filled for that area. Recommend `/project-audit` if the project has never been audited.
 3. Check the backlog for existing tasks that overlap the goal. Extend or reference them; do not duplicate.
 

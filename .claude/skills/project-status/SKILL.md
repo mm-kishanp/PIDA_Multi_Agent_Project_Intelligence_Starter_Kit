@@ -15,7 +15,7 @@ In the skills folder: `project-audit/reference/knowledge-base-guide.md` and `pro
 ## Workflow
 
 1. **Repository state**: confirm the root. When Git is available run `git status --short --branch`, `git log --oneline -15`, and `git stash list`. Note uncommitted changes and do not alter them.
-2. **Records**: read `project-management/PROGRESS.md`, `BACKLOG.md`, `RISKS.md`, `DECISIONS.md` (or the repository's equivalent tracker), and the opening lines of `docs/project-intelligence/project-overview.md`.
+2. **Records**: read `project-management/PROGRESS.md`, `BACKLOG.md`, `RISKS.md`, `DECISIONS.md` (or the repository's equivalent tracker), and the opening lines of `docs/project-intelligence/project.md` (or `project-overview.md` if `project.md` does not exist yet).
 3. **If records are missing**:
    - No `project-management/` and no knowledge base: say the project has not been onboarded, give a short orientation from the README and manifests, and recommend `/project-audit`.
    - Knowledge base present but no `project-management/`: create the four files from the templates, removing example entries, and record a session-start entry in `PROGRESS.md`.
@@ -33,7 +33,7 @@ In the skills folder: `project-audit/reference/knowledge-base-guide.md` and `pro
 ## Report format
 
 ```text
-Project: <one-line description from project-overview>
+Project: <one-line description from project.md>
 Branch / working tree: <branch, ahead/behind, uncommitted summary>
 Current goal / task: <goal> / <PIDA-NNN title, status>
 Tasks: Ready n · In Progress n · In Review n · Blocked n · Proposed n · Done n

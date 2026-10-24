@@ -23,7 +23,7 @@ Record names and codes only. No contacts, contract terms, pricing, credentials, 
 ## How client-specific behavior is implemented
 | Mechanism | Where | How a client is selected at runtime | Evidence |
 |---|---|---|---|
-| [Per-client config file, feature flag, tenant setting row, `if/switch` on client code, per-client folder/module, theme/branding, build variant, separate deployment, DB schema per client] | [path] | [header, subdomain, login claim, env var, build flag] | [path:line] |
+| [Per-client config file, feature flag, tenant setting row, `if`/`switch` on client code, per-client folder/module, theme/branding, build variant, separate deployment, DB schema per client] | [path] | [header, subdomain, login claim, env var, build flag] | [path:line] |
 
 ## Client-specific code locations
 | Location | Client(s) | What it changes | Classification | Evidence |

@@ -15,9 +15,12 @@ Created if missing, updated in place if present, and filled with project-specifi
 ```text
 docs/project-intelligence/
   README.md                  index, scope of this knowledge base, links to equivalent existing docs
-  project-overview.md        what the project is, users, capabilities, glossary, stack, how to run
+  project.md                 plain-language explanation: what, for whom, why, users, capabilities, sub-projects
+  projects/<slug>/project.md one page per sub-project (only when the repository has more than one)
+  project-overview.md        technical summary: glossary, stack, runtime components, how to run
   repository-map.md          where everything lives
   feature-inventory.md       every capability with status and evidence
+  features/FEAT-NNN-<slug>.md  one page per feature: behavior, entry points, data, tests, clients
   requirements.md            reverse-engineered goals, roles, functional and non-functional requirements
   architecture.md            components, key flows (Mermaid), trust boundaries, technical debt
   data-model.md              stores, entities, relationships, migrations
@@ -36,7 +39,7 @@ project-management/
 
 - `reference/discovery-checklist.md`: commands, per-stack signals, search hints, exclusions, size strategy.
 - `reference/knowledge-base-guide.md`: file map, creation and fill rules, ID scheme, feature status rules, and the minimum standard per page.
-- `templates/`: blank pages; `templates/project-management/` for the four tracking files; `templates/feature.md` for optional per-feature pages.
+- `templates/`: blank pages; `templates/project-management/` for the four tracking files; `templates/feature.md` for the per-feature pages.
 
 ## Ground rules
 
@@ -73,7 +76,8 @@ Read the instruction files and documentation listed in checklist section 2. Note
 1. List tracked files by top-level folder; classify each folder (application, library, tests, infrastructure, docs, tooling, generated, vendored).
 2. Identify languages, frameworks, and versions from manifests (checklist section 3); package managers; monorepo layout.
 3. Identify every runtime unit: web app, API, worker, function, scheduled job, CLI, mobile app.
-4. Record this in `repository-map.md` and the stack and components tables of `project-overview.md`.
+4. Identify the **sub-projects** (guide: *Project pages*): units built, run, deployed, or published on their own, such as each project in a solution or each package in a workspace. Note each one's path, type, manifest, and entry point.
+5. Record this in `repository-map.md` and the stack and components tables of `project-overview.md`.
 
 ## Phase 3: Runtime behavior
 
@@ -99,7 +103,7 @@ Tests (frameworks, locations, rough counts per area), coverage configuration, li
 
 ## Phase 7: Synthesis — what the project is
 
-1. Write a plain-language description: what the system does, for whom, and why, in 2–4 sentences. Label it Verified or Inferred.
+1. Write a plain-language description: what the system does, for whom, and why, and the problem it solves. Label it Verified or Inferred. It becomes `project.md`.
 2. Identify user roles and their main workflows from auth configuration, routes, and UI.
 3. Build the feature inventory using the feature status rules in the guide. Assign `FEAT-NNN` IDs.
 4. Reverse-engineer requirements: business goals (normally Inferred), roles and permissions, Given/When/Then requirements for the key features, and non-functional requirements visible in configuration.
@@ -108,11 +112,14 @@ Tests (frameworks, locations, rough counts per area), coverage configuration, li
 
 ## Phase 8: Write the knowledge base
 
-Create `docs/project-intelligence/` and every page in the file map, following the creation rules in the guide. Recommended order: repository-map, architecture, data-model, api-catalog, integrations, client-matrix, security-review, quality-and-deployment, feature-inventory, requirements, project-overview, open-questions, analysis-log, README.
+Create `docs/project-intelligence/` and every page in the file map, following the creation rules in the guide. Recommended order: repository-map, architecture, data-model, api-catalog, integrations, client-matrix, security-review, quality-and-deployment, feature-inventory, feature pages, sub-project pages, requirements, project-overview, project, open-questions, analysis-log, README.
+
+- Write `project.md` for every repository, in plain language a non-developer can follow. Keep technical detail in `project-overview.md` and link between them.
+- When there is more than one sub-project, write `projects/<slug>/project.md` (template `sub-project.md`) for **every** sub-project and list them all in `project.md`. Follow *Project pages* in the guide for what counts, the order for large repositories, and how to record pages still remaining.
 
 - Fill every section, or mark it `Not applicable — <evidence>` or `Unknown — checked <what>; next step: <how>`.
 - Use Mermaid for key flows and, when there are more than three entities, an `erDiagram`.
-- Write a `features/FEAT-NNN-<slug>.md` page (template `feature.md`) only for complex or critical features that need more than one inventory row.
+- Write a `features/FEAT-NNN-<slug>.md` page (template `feature.md`) for **every** feature in the inventory, and link it from the inventory's `Page` column. Follow *Feature pages* in the guide for depth and, in very large inventories, the order to write them in and how to record the ones still remaining.
 - In `README.md`, list the pages, the scope of this audit, and links to equivalent existing documentation.
 
 ## Phase 9: Seed project management
@@ -130,9 +137,9 @@ Run the final checks in the guide: the freshness script if present, the placehol
 ## Phase 11: Report to the user
 
 1. **What the project is**: 3–5 plain sentences.
-2. **Stack and runtime components**: one line each.
+2. **Stack, runtime components, and sub-projects**: one line each, and which sub-project pages were written.
 3. **Scope**: inspected, sampled, excluded, not inspected.
-4. **Features**: counts per status, plus the notable Partial and Unknown ones.
+4. **Features**: counts per status, plus the notable Partial and Unknown ones; feature pages written, and any still remaining.
 5. **Clients**: clients found and how they differ, or "single-client"; mismatches between the user's list and the code.
 6. **Top risks and security concerns**, with severity.
 7. **Files created and updated**.
@@ -143,4 +150,4 @@ Never claim the audit is exhaustive when areas were sampled or skipped.
 
 ## Large repositories and subagents
 
-When the platform supports subagents (Claude Code: `pida-auditor`), split the work by area (each service or package, plus cross-cutting data, API, infrastructure, clients, and tests) and run the areas in parallel. Give each subagent its area, the checklist path, and the report format it must return. Merge the results yourself. Re-check the evidence for any claim that sets a feature to `Implemented` or a risk to High or Critical. Without subagents, audit the areas sequentially and record progress after each one.
+When the platform supports subagents (Claude Code: `pida-auditor`), split the work by area (each sub-project, service, or package, plus cross-cutting data, API, infrastructure, clients, and tests) and run the areas in parallel. Give each subagent its area, the checklist path, and the report format it must return. Merge the results yourself. Re-check the evidence for any claim that sets a feature to `Implemented` or a risk to High or Critical. Without subagents, audit the areas sequentially and record progress after each one.
