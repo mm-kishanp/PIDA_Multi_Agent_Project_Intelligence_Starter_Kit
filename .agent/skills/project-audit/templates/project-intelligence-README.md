@@ -26,5 +26,13 @@ This directory is the evidence-based knowledge base maintained by PIDA.
 - `client-matrix.md`
 - `security-review.md`
 - `quality-and-deployment.md`
+- `deployment.md`
+- `debugging.md`
+- `coding-standards/` (overview and eight topic pages)
+- `code-review-guide.md`
+- `review-findings.md`
+- `tech-debt.md`
+- `seo-guide.md`
+- `aeo-guide.md`
 - `open-questions.md`
 - `analysis-log.md`

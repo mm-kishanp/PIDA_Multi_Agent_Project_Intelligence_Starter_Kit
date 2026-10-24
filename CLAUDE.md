@@ -69,6 +69,10 @@ Maintain, as applicable:
 - `client-matrix.md`
 - `security-review.md`
 - `quality-and-deployment.md`
+- `deployment.md` and `debugging.md`
+- `coding-standards/` (overview plus architecture-and-layering, async-await, code-structure-and-duplication, commenting-and-documentation, constants-and-magic-values, error-handling-and-security, logging, naming-and-code-hygiene)
+- `code-review-guide.md`, `review-findings.md`, and `tech-debt.md`
+- `seo-guide.md` and `aeo-guide.md` (or `Not applicable` when there are no public pages)
 - `open-questions.md`
 - `analysis-log.md`
 
@@ -92,7 +96,7 @@ For every feature, bug, refactor, or maintenance task:
 3. Trace the affected code, dependencies, data flows, callers, and affected clients.
 4. Create or update a task with scope, dependencies, acceptance criteria, test plan, and status.
 5. Plan the smallest coherent implementation. Avoid unrelated refactors and speculative abstractions.
-6. Implement in the repository's established style. Preserve backward compatibility unless change is explicitly intended.
+6. Implement in the repository's established style and the rules in `docs/project-intelligence/coding-standards/`; never copy a pattern those pages list as a deviation. Preserve backward compatibility unless change is explicitly intended.
 7. Add/update unit, integration, contract, and/or end-to-end tests as appropriate. Never weaken or delete tests simply to get a pass.
 8. Run the most relevant tests and static checks, then broader checks when practical.
 9. Review the diff for accidental changes, security issues, logging of sensitive data, API compatibility, migration risk, and untracked artifacts.

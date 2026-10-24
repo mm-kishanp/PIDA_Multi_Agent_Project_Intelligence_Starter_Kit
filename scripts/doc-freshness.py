@@ -25,6 +25,7 @@ DATE_RE = re.compile(r"Last reviewed:\s*(\S+)", re.IGNORECASE)
 FENCE_RE = re.compile(r"^(```|~~~).*?^\1", re.MULTILINE | re.DOTALL)
 LINK_RE = re.compile(r"\]\(([^)\s]+)\)")
 CODE_RE = re.compile(r"`([^`\s]+)`")
+SLASH_COMMAND_RE = re.compile(r"^/[\w:-]+$")  # `/project-audit`, `/pida:project-docs`
 LOCATION_SUFFIX_RE = re.compile(r"(#L?\d+(-L?\d+)?|:\d+(-\d+)?)$")
 PLACEHOLDER_CHARS = set("<>[]{}*$|=")
 
@@ -47,7 +48,9 @@ def cited_paths(text):
     """Yield (line number, path) for links and path-like code spans."""
     text = FENCE_RE.sub(lambda m: "\n" * m.group(0).count("\n"), text)
     for lineno, line in enumerate(text.splitlines(), start=1):
-        candidates = LINK_RE.findall(line) + [c for c in CODE_RE.findall(line) if "/" in c]
+        candidates = LINK_RE.findall(line) + [
+            c for c in CODE_RE.findall(line) if "/" in c and not SLASH_COMMAND_RE.match(c)
+        ]
         for raw in candidates:
             if "://" in raw or raw.startswith(("#", "mailto:", "-")) or PLACEHOLDER_CHARS & set(raw):
                 continue

@@ -15,7 +15,7 @@ In the skills folder: `project-audit/reference/knowledge-base-guide.md` and `pro
 ## Before you start
 
 1. Determine the scope: `git status --short`, `git diff`, `git diff --staged`, and `git log --oneline <base>..HEAD` with `git diff <base>...HEAD`. Include untracked files relevant to the change.
-2. Read `AGENTS.md` / `CLAUDE.md`, the task in `BACKLOG.md` (acceptance criteria and test plan), and the knowledge pages for the touched area: `repository-map.md`, `architecture.md`, `security-review.md`, `api-catalog.md`, `data-model.md`, `quality-and-deployment.md`.
+2. Read `AGENTS.md` / `CLAUDE.md`, the task in `BACKLOG.md` (acceptance criteria and test plan), `code-review-guide.md` (the project's review checklist), the `coding-standards/` pages for the topics the diff touches, open items in `review-findings.md` and `tech-debt.md` for the touched files, and the knowledge pages for the touched area: `repository-map.md`, `architecture.md`, `security-review.md`, `api-catalog.md`, `data-model.md`, `quality-and-deployment.md`.
 3. If those pages are missing or still templates, learn the conventions directly from the surrounding code and tests. Note in the report that the knowledge base needs `/project-audit`. Do not block the review on it.
 
 ## What to check
@@ -23,7 +23,7 @@ In the skills folder: `project-audit/reference/knowledge-base-guide.md` and `pro
 | Area | Questions |
 |---|---|
 | Correctness | Does each acceptance criterion hold? Are edge cases, empty and large inputs, and error paths handled? Any off-by-one, null, race, or ordering issue? |
-| Conventions | Does it follow the project's existing structure, naming, error handling, logging, and dependency patterns? |
+| Coding standards | Does it follow each `coding-standards/` page: architecture and layering, async and await, structure and duplication, comments and docs, constants and magic values, error handling and security, logging, naming and hygiene? Cite the rule a finding breaks. Does it introduce new technical debt? |
 | Security | Authentication and authorization on new paths; tenant and ownership checks on every data access; input validation; injection (SQL, command, template, path); SSRF; unsafe deserialization; secrets in code, config, or logs; sensitive data in logs or errors |
 | Compatibility | Public API, event, and schema changes; migration safety (locks, backfill, rollback); configuration changes and defaults; feature flags |
 | Client impact | Which clients the change reaches (check `client-matrix.md` and client-specific code); does a change meant for one client leak to others through shared code; are client branches, per-client config, and flags updated consistently; new hardcoded client IDs; tests for each affected client variant |
@@ -58,4 +58,10 @@ Run the relevant checks from `quality-and-deployment.md` or CI (focused tests, l
 4. Checks run, with results.
 5. Documentation drift found.
 
-Report findings first. Fix in-scope issues only if asked, or when the user's request included fixing; ask before expanding scope. Record out-of-scope findings as `Proposed` tasks in `BACKLOG.md` and significant risks in `RISKS.md`.
+Report findings first. Fix in-scope issues only if asked, or when the user's request included fixing; ask before expanding scope.
+
+Then record them:
+- Append every Medium-or-higher finding to `review-findings.md` as `RF-NNN` (source `Review of PIDA-NNN`, branch, or PR), and update the status of earlier findings this change fixes, with evidence. Create the page from the template if it is missing.
+- Add new long-lived structural problems to `tech-debt.md` as `TD-NNN`.
+- Add recurring themes to *Recurring review themes* in `code-review-guide.md`.
+- Record out-of-scope findings as `Proposed` tasks in `BACKLOG.md` and significant risks in `RISKS.md`.

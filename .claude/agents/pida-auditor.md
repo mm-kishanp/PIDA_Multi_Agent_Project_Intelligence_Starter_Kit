@@ -25,4 +25,7 @@ Return Markdown with these sections, citing paths instead of pasting large code 
 6. **Data, API, and integration touchpoints**.
 7. **Client-specific code**: clients referenced in this area, how each is selected at runtime, client-specific paths, config keys, and flags, and which features differ per client (discovery checklist section 10). If the caller gave a client list, search for each client and report hits and misses.
 8. **Tests and commands discovered**: say whether each command was read from config or actually run (normally not run).
-9. **Open questions** that need evidence or a product decision.
+9. **Code quality** (discovery checklist section 11): files sampled; for each of the eight coding-standard topics, the standard found or inferred, check results, good examples, and deviations with `path:line` and severity; technical-debt candidates; code review practice found.
+10. **Deployment and debugging**: delivery path for this area, rollback, manual steps; how to run and debug it locally.
+11. **Web presence**: SEO and AEO observations if the area serves public pages (checklist section 13), or "not applicable".
+12. **Open questions** that need evidence or a product decision.

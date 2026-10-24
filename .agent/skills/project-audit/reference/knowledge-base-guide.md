@@ -23,6 +23,14 @@ Templates are in this skill's `templates/` folder. Paths in the **Target** colum
 | `client-matrix.md` | `docs/project-intelligence/client-matrix.md` | project-audit, project-docs, project-implement (any skill that learns client facts) |
 | `security-review.md` | `docs/project-intelligence/security-review.md` | security-review |
 | `quality-and-deployment.md` | `docs/project-intelligence/quality-and-deployment.md` | testing, deployment |
+| `deployment.md` | `docs/project-intelligence/deployment.md` | deployment, project-audit |
+| `debugging.md` | `docs/project-intelligence/debugging.md` | project-audit, project-docs, testing |
+| `coding-standards/overview.md` and the eight topic pages in `coding-standards/` | `docs/project-intelligence/coding-standards/` (same file names) | project-audit, project-review, project-docs |
+| `code-review-guide.md` | `docs/project-intelligence/code-review-guide.md` | project-audit, project-review |
+| `review-findings.md` | `docs/project-intelligence/review-findings.md` | project-audit, project-review, project-implement |
+| `tech-debt.md` | `docs/project-intelligence/tech-debt.md` | project-audit, architecture, project-review, project-implement |
+| `seo-guide.md` | `docs/project-intelligence/seo-guide.md` | project-audit, project-docs |
+| `aeo-guide.md` | `docs/project-intelligence/aeo-guide.md` | project-audit, project-docs |
 | `open-questions.md` | `docs/project-intelligence/open-questions.md` | all skills |
 | `analysis-log.md` | `docs/project-intelligence/analysis-log.md` | project-audit, project-refresh, project-docs |
 | `project-management/BACKLOG.md` | `project-management/BACKLOG.md` | project-plan (project-audit seeds it) |
@@ -35,7 +43,7 @@ Any skill that needs a page that does not exist yet creates it from the template
 ## Creation rules
 
 1. **Look for an equivalent first.** If the repository already has `ARCHITECTURE.md`, `docs/adr/`, an OpenAPI spec, an issue tracker, or similar, link to it from the PIDA page instead of copying it. Record the mapping in `docs/project-intelligence/README.md`. If the repository already keeps knowledge in a different folder, use that folder and tell the user.
-2. **Create folders as needed**: `docs/project-intelligence/`, `docs/project-intelligence/features/`, `docs/project-intelligence/projects/<slug>/` (only when the repository has more than one sub-project), and `project-management/`.
+2. **Create folders as needed**: `docs/project-intelligence/`, `docs/project-intelligence/features/`, `docs/project-intelligence/coding-standards/`, `docs/project-intelligence/projects/<slug>/` (only when the repository has more than one sub-project), and `project-management/`.
 3. **Start from the template.** Keep its headings in order; add sections the project needs; delete sections only if they are irrelevant and say why in the scope line.
 4. **Fill every placeholder.** A finished section is one of:
    - evidence-backed content labelled Verified / Inferred / Unknown with source paths;
@@ -70,6 +78,24 @@ When the repository contains more than one **sub-project**, each also gets `proj
 5. **Large repositories.** With more sub-projects than can be documented well in one run (roughly more than 15), write pages for deployable applications and services first, then shared libraries, then the rest, and list the ones still without a page under *Project pages remaining* in `PROGRESS.md`.
 6. **Keep them current.** A change to a sub-project's purpose, entry point, dependencies, interfaces, configuration, or deployment updates its page in the same change. A new sub-project gets a new page and a row in `project.md`.
 
+## Coding standards, reviews, and technical debt
+
+The `coding-standards/` pages describe how the code is written today, the standard the project should hold to, where the code deviates, and what to change. They guide implementation and review.
+
+1. **Find documented standards first**: `.editorconfig`, formatter and linter configs, analyzer rule sets, CONTRIBUTING, style guides, ADRs. A rule backed by one of these is Verified, with its path.
+2. **Otherwise infer from the dominant pattern.** Sample representative files from each sub-project and layer (typically 3–5 per layer, plus the most-changed files from Git history) and state the sample on each page. A rule followed by most of the sample is `Inferred: N of M sampled files follow it` until the team confirms it. Never present an inferred rule as the team's policy.
+3. **Every page answers four things**: the standard, how the code does it today (with good examples to copy), deviations (with `path:line` and severity), and recommended changes (to the code or to the standard itself, with effort and priority).
+4. **Recommendations are proposals.** Do not change code during an audit. Put actionable changes in `BACKLOG.md` as `Proposed` tasks; a change to the standard itself becomes a `Proposed` ADR in `DECISIONS.md` until accepted.
+5. **Findings and debt.** A concrete defect or deviation worth tracking goes to `review-findings.md` as `RF-NNN`. A long-lived structural problem (layering violations, duplication, outdated dependencies, untested critical paths, manual deployment steps) goes to `tech-debt.md` as `TD-NNN`. Link both ways to tasks.
+6. **Keep them current.** `/project-review` appends findings and checks changes against the standards and `code-review-guide.md`. `/project-implement` follows the standards and updates the status of findings and debt it resolves. Every re-audit re-checks open findings and debt items and marks them Fixed or Paid down only with evidence.
+7. Write `Not applicable — <evidence>` on a topic page that cannot apply (for example `async-await.md` in a language with no async model).
+
+## Deployment, debugging, SEO, and AEO
+
+- **`deployment.md`** explains the deployment strategy in plain language and then the detail: what is deployed, environments, pipelines, infrastructure, configuration names, migrations, release, rollback, post-deploy verification, observability, and manual steps. `quality-and-deployment.md` keeps local setup, quality gates, and CI checks, and links to it.
+- **`debugging.md`** tells a developer how to run each sub-project under a debugger, attach to a running process, configure local services and test data, find logs, debug tests and background jobs, investigate deployed environments read-only, and fix common problems. Mark each command Verified (run) or Documented (read).
+- **`seo-guide.md` and `aeo-guide.md`** apply only when the project serves public web pages or content. Otherwise write `Not applicable — <evidence>` in the Applicability line (for example an internal tool behind sign-in, an API, a CLI, or a mobile app). Whether to allow AI crawlers is a business decision: record the current state and ask; never change it unprompted.
+
 ## Feature pages
 
 Every feature in `feature-inventory.md` gets its own page, `features/FEAT-NNN-<slug>.md`, created from `feature.md`. `<slug>` is the feature name in lowercase kebab-case (`FEAT-007-csv-export.md`).
@@ -81,7 +107,7 @@ Every feature in `feature-inventory.md` gets its own page, `features/FEAT-NNN-<s
 
 ## IDs
 
-Use stable, never-reused IDs: `FEAT-NNN` (features), `BR-NNN` (business goals), `FR-NNN` / `NFR-NNN` (requirements), `INT-NNN` (integrations), `CLIENT-NNN` (clients), `SEC-NNN` (security findings), `Q-NNN` (open questions), `R-NNN` (risks), `ADR-NNN` (decisions), `PIDA-NNN` (backlog tasks). Continue from the highest existing number.
+Use stable, never-reused IDs: `FEAT-NNN` (features), `BR-NNN` (business goals), `FR-NNN` / `NFR-NNN` (requirements), `INT-NNN` (integrations), `CLIENT-NNN` (clients), `RF-NNN` (review findings), `TD-NNN` (technical debt), `SEC-NNN` (security findings), `Q-NNN` (open questions), `R-NNN` (risks), `ADR-NNN` (decisions), `PIDA-NNN` (backlog tasks). Continue from the highest existing number.
 
 ## Minimum standard per page
 
@@ -94,13 +120,22 @@ Use stable, never-reused IDs: `FEAT-NNN` (features), `BR-NNN` (business goals), 
 | feature-inventory | One row per user-facing capability and significant internal capability (jobs, imports, admin tools), with status, clients, a link to its feature page, evidence, tests, gaps | Routes, screens, navigation, CLI commands, jobs, permission definitions, tests; README claims only as leads |
 | features/FEAT-NNN-* | One page per inventory feature: user outcome, users and permissions, entry points, main flow and error cases as Given/When/Then, data touched, integrations and side effects, configuration and flags, client availability, tests, gaps. Depth per *Feature pages* | The feature's traced code path, tests, config, and client-specific code |
 | requirements | Business goals (usually Inferred), roles and permissions, functional requirements for key features as Given/When/Then, non-functional requirements visible in config (timeouts, limits, caching, retention), constraints | Auth config, feature behavior, configuration, docs |
-| architecture | Components and responsibilities, dependency direction, 2–5 key flows as Mermaid diagrams, trust boundaries, constraints, technical debt | Composition root, module references, traced flows |
+| architecture | Components and responsibilities, dependency direction, 2–5 key flows as Mermaid diagrams, trust boundaries, constraints, architectural risks (debt goes to `tech-debt.md`) | Composition root, module references, traced flows |
 | data-model | Every data store; entities with keys, relationships, sensitive fields, and tenant/ownership rules; migration mechanism and latest migration; Mermaid `erDiagram` when there are more than three entities | ORM models, schema files, migrations |
 | api-catalog | Every externally reachable endpoint, event, or contract with auth; for more than ~50, group by resource with counts and detail the critical ones | Route registrations, controllers, OpenAPI/GraphQL/proto files, consumers |
 | integrations | Every external system, direction, auth method, config names, failure handling | HTTP clients, SDKs, webhooks, queues |
 | client-matrix | Every known client (from the user and from code) with its key in source; how a client is selected at runtime; every client-specific code location; which features are Enabled / Disabled / Customized per client; per-client customizations, integrations, config key names, and tests; or `Not applicable — <evidence>` for single-client code | User-provided lists, per-client config and folders, feature flags, tenant settings, client-code conditionals, seeds, deployment variants |
 | security-review | Every surface row filled with a status; findings with severity and evidence; areas not reviewed | Auth middleware, policies, data access, config, dependencies, CI |
-| quality-and-deployment | Local setup, quality gates with exact commands and whether they were run, pipelines, environments, release and rollback, observability, gaps | CI files, manifests, IaC, Dockerfiles |
+| quality-and-deployment | Local setup, quality gates with exact commands and whether they were run, CI checks and whether they block merges, gaps; links to `deployment.md` and `debugging.md` | CI files, manifests, package scripts, hooks |
+| deployment | Plain-language deployment strategy and a flow diagram; what is deployed per sub-project; environments; pipelines; infrastructure; configuration and secret names; migrations; release; rollback; post-deploy verification; observability; manual steps; recommended improvements | Pipeline files, Dockerfiles, IaC, release scripts, deployment docs |
+| debugging | How to debug each sub-project locally, attach, configure local services and test data, find logs, debug tests and jobs, diagnose deployed environments read-only, common problems | IDE launch configs, compose files, README, logging config, scripts |
+| `coding-standards/overview` | Standard sources and enforcement; how the code is implemented; scorecard for the eight topics; top recommended changes; proposed changes to the standards | Config files, sampled code, topic pages |
+| `coding-standards/<topic>` | Standard (documented or inferred, with enforcement), check results, current practice with examples, deviations with severity, recommended changes; or `Not applicable` | Sampled code per sub-project and layer, linter and analyzer configs |
+| code-review-guide | How reviews work here (PR template, code owners, required checks, conventions), review checklist linked to the standards, what blocks a merge, recurring themes | PR templates, CODEOWNERS, CI, CONTRIBUTING, review findings |
+| review-findings | Every finding from audits and reviews with ID, source, severity, location, status, and task; summary counts | Audit and review runs |
+| tech-debt | Summary, hotspots, debt register with type, evidence, impact, effort, priority, status, task; paid-down log | Code, Git history, TODO/FIXME counts, manifests, findings |
+| seo-guide | Applicability; rendering per site; check results; findings; recommended changes; or `Not applicable` | Front-end code, page templates, head/meta handling, static files |
+| aeo-guide | Applicability; AI crawler access; check results; findings; recommended changes; or `Not applicable` | Front-end code, structured data, `robots.txt`, static files |
 | open-questions | Every Unknown that affects behavior, security, data, or delivery | All pages |
 | analysis-log | One entry per audit/refresh run: trigger, scope, checks run, documents updated, next steps | This run |
 | BACKLOG | Remove the template example; actionable gaps as `Proposed` tasks with evidence and acceptance criteria | Findings |
@@ -125,5 +160,6 @@ Use stable, never-reused IDs: `FEAT-NNN` (features), `BR-NNN` (business goals), 
 3. Search the files you wrote for secret-like content: `password=`, `secret=`, `token=`, `AKIA`, `-----BEGIN`, `Server=`, `mongodb://`, `postgres://`. Remove any values.
 4. Confirm every Verified claim cites a path, and every Inferred claim gives a reason and confidence.
 5. Confirm every client the user named in this session appears in `client-matrix.md`.
-6. Confirm `project.md` lists every sub-project and each has an existing `projects/<slug>/project.md`, or is listed under *Project pages remaining* in `PROGRESS.md`.
-7. Confirm every inventory row links to an existing `features/FEAT-NNN-*.md` page, or is listed under *Feature pages remaining* in `PROGRESS.md`, and that every feature page matches an inventory row.
+6. Confirm all nine `coding-standards/` pages, `code-review-guide.md`, `review-findings.md`, `tech-debt.md`, `deployment.md`, `debugging.md`, `seo-guide.md`, and `aeo-guide.md` exist and are filled or marked `Not applicable — <evidence>`, and that every `RF-NNN` and `TD-NNN` worth acting on has a task.
+7. Confirm `project.md` lists every sub-project and each has an existing `projects/<slug>/project.md`, or is listed under *Project pages remaining* in `PROGRESS.md`.
+8. Confirm every inventory row links to an existing `features/FEAT-NNN-*.md` page, or is listed under *Feature pages remaining* in `PROGRESS.md`, and that every feature page matches an inventory row.

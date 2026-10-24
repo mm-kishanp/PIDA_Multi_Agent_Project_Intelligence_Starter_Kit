@@ -1,6 +1,6 @@
 ---
 name: deployment
-description: Analyze or change how this repository is built, configured, and delivered - CI/CD pipelines, environments, configuration and secrets references, containers, infrastructure as code, release and rollback, and observability - and produce release checklists. Maintains docs/project-intelligence/quality-and-deployment.md. Never deploys or changes shared infrastructure without approval.
+description: Analyze or change how this repository is built, configured, and delivered - CI/CD pipelines, environments, configuration and secrets references, containers, infrastructure as code, release and rollback, and observability - and produce release checklists. Maintains docs/project-intelligence/deployment.md (strategy and delivery) and the CI section of quality-and-deployment.md. Never deploys or changes shared infrastructure without approval.
 ---
 
 # Deployment and delivery
@@ -9,12 +9,12 @@ Use to document the delivery path, change a pipeline, Dockerfile, or IaC, prepar
 
 ## Shared PIDA resources
 
-In the skills folder: `project-audit/reference/knowledge-base-guide.md`, `project-audit/reference/discovery-checklist.md` (sections 3 and 6), and `project-audit/templates/quality-and-deployment.md`.
+In the skills folder: `project-audit/reference/knowledge-base-guide.md`, `project-audit/reference/discovery-checklist.md` (sections 3 and 6), and `project-audit/templates/deployment.md` and `quality-and-deployment.md`.
 
 ## Before you start
 
-1. Read `AGENTS.md` / `CLAUDE.md`, `project-overview.md`, `repository-map.md`, `quality-and-deployment.md`, `architecture.md`, and `security-review.md`.
-2. If `quality-and-deployment.md` is missing or still a template, create it from the template and fill it from the evidence below.
+1. Read `AGENTS.md` / `CLAUDE.md`, `project-overview.md`, `repository-map.md`, `deployment.md`, `quality-and-deployment.md`, `architecture.md`, and `security-review.md`.
+2. If `deployment.md` or `quality-and-deployment.md` is missing or still a template, create it from the template and fill it from the evidence below.
 
 ## 1. Discover the delivery path
 
@@ -32,7 +32,7 @@ Mark anything not verifiable from the repository (portal settings, manual steps)
 
 ## 2. Document
 
-Fill `quality-and-deployment.md`: local development, quality gates (command, where enforced, last result if run), pipelines, environments and configuration names, release and rollback, observability, and gaps. Add delivery risks (manual steps, no rollback, unpinned images, secrets in pipeline files, missing gates) to `RISKS.md` and actionable fixes to `BACKLOG.md`.
+Fill `deployment.md`: the deployment strategy in plain words, a flow diagram, what is deployed per sub-project, environments and configuration names, pipelines, infrastructure, migrations, release, rollback, post-deploy verification, observability, manual steps, and recommended improvements. Keep local development, quality gates, and CI checks in `quality-and-deployment.md`. Record delivery debt (manual steps, no rollback, unpinned images) in `tech-debt.md`. Add delivery risks (manual steps, no rollback, unpinned images, secrets in pipeline files, missing gates) to `RISKS.md` and actionable fixes to `BACKLOG.md`.
 
 ## 3. Change pipelines, containers, or IaC
 

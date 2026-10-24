@@ -2,6 +2,8 @@
 
 Last reviewed: YYYY-MM-DD
 
+Local setup and the quality gates that every change must pass. Delivery details live in `deployment.md`.
+
 ## Local development
 | Step | Command | Verified? | Notes |
 |---|---|---|---|
@@ -16,23 +18,12 @@ Last reviewed: YYYY-MM-DD
 | Type check / build | | | | |
 | Security / dependency scan | | | | |
 
-## CI/CD pipelines
-| Pipeline | Trigger | Stages | Deploy target | Evidence |
+## CI pipelines (quality checks)
+| Pipeline | Trigger | Checks it runs | Blocks merge? | Evidence |
 |---|---|---|---|---|
 
-## Environments and configuration
-| Environment | How deployed | Config source | Required variable names | Evidence |
-|---|---|---|---|---|
-
-## Release and rollback
-- Release process:
-- Database migration step:
-- Rollback procedure:
-- Feature flags:
-- Verified source paths:
-
-## Observability
-- Logging, metrics, tracing, alerting: [Evidence or Unknown]
+## Deployment and debugging
+How the project is deployed (strategy, environments, release, rollback, observability) is in `deployment.md`. How to debug it is in `debugging.md`.
 
 ## Gaps
 - [Missing gate, untested path, or manual step — impact]

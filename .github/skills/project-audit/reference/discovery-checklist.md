@@ -123,3 +123,46 @@ Find out whether the codebase serves several clients (customers, tenants, brands
 3. **For each client**, record: its key in source; how it is selected at runtime (subdomain, header, login claim, environment variable, build flag, database row); the features it has Enabled, Disabled, or Customized; its client-only integrations and configuration key names; and the tests that exercise its path.
 4. **Flag risks**: hardcoded client IDs in business logic, copy-pasted per-client variants of shared code, client branches without tests, and clients in the user's list with no trace in code (or the reverse).
 5. Per-client values in configuration may be secrets. Record key names only.
+
+## 11. Coding standards and code quality
+
+Read-only. Record findings in the `coding-standards/` pages, `review-findings.md`, and `tech-debt.md`.
+
+1. **Standard sources**: `.editorconfig`, `.prettierrc*`, `.eslintrc*`/`eslint.config.*`, `ruff.toml`/`[tool.ruff]`, `.pylintrc`, `mypy.ini`, `.rubocop.yml`, `stylecop.json`, `.globalconfig`/`*.ruleset`, `Directory.Build.props` (`TreatWarningsAsErrors`, analyzers), `.golangci.yml`, `clippy.toml`, `checkstyle.xml`, `detekt.yml`, `phpcs.xml`, `CONTRIBUTING*`, style guides, ADRs. Note which are enforced in CI or pre-commit hooks.
+2. **Sample**: per sub-project and layer, 3–5 representative files plus the most-changed files (section 1). State the sample on each page.
+3. **Search hints per topic**:
+
+   | Topic | Search for |
+   |---|---|
+   | Architecture and layering | project/module references, imports from data-access code in controllers or UI, ORM entities in API responses, `new` of infrastructure classes in business logic, service locators |
+   | Async and await | `.Result`, `.Wait()`, `GetAwaiter().GetResult()`, `async void`, un-awaited calls, missing `CancellationToken`/`AbortSignal`, `Thread.Sleep` in async code, `time.sleep` in async functions |
+   | Structure and duplication | largest files and functions, near-identical files, per-client copies, unused exports, folders that break the convention |
+   | Comments and documentation | doc-comment coverage on public types, commented-out blocks, `TODO`/`FIXME`/`HACK` counts, module READMEs |
+   | Constants and magic values | numeric and string literals in conditions, hardcoded URLs, hosts, IDs, GUIDs, client codes, timeouts |
+   | Error handling and security | empty `catch`, catch-all that returns success, stack traces in responses, string-built SQL or shell commands, missing validation, missing authorization checks |
+   | Logging | `print(`, `console.log(`, `Console.WriteLine(`, string-concatenated log messages, logging of tokens, passwords, emails, or request bodies, missing correlation IDs |
+   | Naming and hygiene | mixed casing conventions, abbreviations, names that differ from the glossary, unused imports, suppressed warnings (`#pragma warning disable`, `eslint-disable`, `# noqa`, `@SuppressWarnings`), debug leftovers |
+
+4. **Technical debt signals**: outdated or end-of-life runtimes and packages (versions from manifests), TODO/FIXME density, Git hotspots that are also large or untested, duplicated per-client code, manual deployment steps, missing tests on critical paths.
+5. **Code review practice**: `.github/pull_request_template.md`, `.github/PULL_REQUEST_TEMPLATE/`, `.gitlab/merge_request_templates/`, `CODEOWNERS`, required CI checks, review bots.
+
+Do not run linters, analyzers, or formatters during an audit unless the user asks; record their commands as Documented.
+
+## 12. Debugging
+
+- IDE configurations: `.vscode/launch.json`, `.vscode/tasks.json`, `Properties/launchSettings.json`, `.idea/runConfigurations/`, `.run/`, `.devcontainer/`.
+- Local services: `docker-compose*.yml`, `compose.yaml`, emulators, seed scripts, `Makefile`/`justfile`/`taskfile` targets.
+- Example configuration: `.env.example`, `.env.sample`, `appsettings.Development.json`, `config/*.example.*` (key names only).
+- Logging configuration and local log locations; health endpoints; troubleshooting sections in READMEs.
+
+## 13. SEO and AEO
+
+Applies only when a sub-project serves public web pages or content. Otherwise mark both guides `Not applicable — <evidence>`.
+
+- Rendering: Next.js/Nuxt/SvelteKit/Astro/Gatsby (static or server rendering) versus client-only SPA builds; server-side templates (Razor, Django, Rails views).
+- Head and meta handling: `<title>`, `<meta name="description">`, `next/head`/`metadata` exports, `react-helmet`, `useHead`, canonical tags, Open Graph tags.
+- Static files: `robots.txt`, `sitemap.xml` or sitemap generators, `llms.txt`, `manifest.json`, favicons.
+- Structured data: `application/ld+json`, schema.org types.
+- Content: heading structure, `alt` attributes, FAQ and how-to pages, author and date fields, i18n and `hreflang`.
+- Performance risks: image components and formats, lazy loading, bundle size config, render-blocking scripts and fonts.
+- AI crawler rules in `robots.txt` (for example `GPTBot`, `ClaudeBot`, `PerplexityBot`, `Google-Extended`).

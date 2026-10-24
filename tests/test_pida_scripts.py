@@ -52,6 +52,8 @@ class Install(unittest.TestCase):
                     ".claude/agents/pida-auditor.md", ".agents/skills/project-audit/templates/client-matrix.md",
                     "docs/project-intelligence/client-matrix.md", "docs/project-intelligence/project.md",
                     ".agents/skills/project-audit/templates/sub-project.md", "project-management/BACKLOG.md",
+                    "docs/project-intelligence/coding-standards/async-await.md",
+                    "docs/project-intelligence/deployment.md", "docs/project-intelligence/aeo-guide.md",
                     "scripts/doc-freshness.py"):
             self.assertTrue((self.target / rel).is_file(), rel)
         for rel in (".github", ".agent", ".claude-plugin", "skills", "tests", "README.md"):
@@ -108,6 +110,15 @@ class Packaging(unittest.TestCase):
     def test_skill_copies_in_sync(self):
         result = run(SYNC, "--check")
         self.assertEqual(result.returncode, 0, result.stdout)
+
+    def test_every_kb_template_mirrored_in_kit_docs(self):
+        templates = ROOT / ".agents" / "skills" / "project-audit" / "templates"
+        skip = {"feature.md", "sub-project.md", "project-intelligence-README.md"}
+        for template in templates.rglob("*.md"):
+            rel = template.relative_to(templates)
+            if rel.parts[0] == "project-management" or rel.name in skip:
+                continue
+            self.assertTrue((ROOT / "docs" / "project-intelligence" / rel).is_file(), rel.as_posix())
 
     def test_skill_frontmatter(self):
         for skill_md in [*SKILLS.glob("*/SKILL.md"), *(ROOT / "skills").glob("*/SKILL.md")]:

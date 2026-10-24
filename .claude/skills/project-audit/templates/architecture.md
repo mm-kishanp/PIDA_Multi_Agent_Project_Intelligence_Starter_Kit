@@ -18,9 +18,11 @@ Last reviewed: YYYY-MM-DD
 ## Architectural constraints
 [Compatibility, performance, regulatory, operational.]
 
-## Risks and technical debt
+## Architectural risks
 | Item | Evidence | Impact | Suggested action |
 |---|---|---|---|
+
+Technical debt is tracked in `tech-debt.md`; code-level layering rules are in `coding-standards/architecture-and-layering.md`.
 
 ## Architecture decisions
 Link to existing ADRs. Create a new ADR only for meaningful decisions.

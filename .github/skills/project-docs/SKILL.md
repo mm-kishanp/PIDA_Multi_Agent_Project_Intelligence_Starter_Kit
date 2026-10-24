@@ -44,6 +44,10 @@ In the skills folder (for example `.claude/skills/` or `.agents/skills/`):
 - **API catalog**: method, route or topic, auth, request and response schema, status codes, validation, side effects, evidence. Follow the api-development skill for depth.
 - **Data model**: stores, entities, keys, relationships, constraints, indexes, tenancy, migrations, retention, sensitive fields. Follow the database-development skill for depth.
 - **Client matrix**: list every client from the user and from code, how each is selected at runtime, the client-specific code locations, and Enabled / Disabled / Customized per feature. User-stated facts stay `Inferred (user-stated)` until a cited path confirms them. Follow *Client information* in the guide and checklist section 10.
+- **Coding standards** (`coding-standards/`): for each of the eight topics, the standard (documented with its path, or inferred from a stated sample), check results, current practice with good examples, deviations with severity, and recommended changes; summarize in `overview.md`. Follow *Coding standards, reviews, and technical debt* in the guide and checklist section 11.
+- **Code review guide, review findings, tech debt**: how reviews work and the checklist; the `RF-NNN` log with statuses; the `TD-NNN` register with hotspots. Never delete history; update statuses with evidence.
+- **Deployment** (`deployment.md`): start with the strategy in plain words and a flow diagram, then the detail. **Debugging** (`debugging.md`): practical steps a developer can follow today.
+- **SEO and AEO guides**: only for public web pages or content; otherwise `Not applicable — <evidence>`. Record AI-crawler policy as found; never change it.
 - **Quality and deployment**: include only commands that were discovered in config or verified by running. Say which.
 
 ## Rules

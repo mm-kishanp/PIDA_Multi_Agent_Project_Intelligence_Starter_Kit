@@ -27,7 +27,9 @@ Use `docs/project-intelligence/` unless the repository has an equivalent source 
 - architecture and architecture decisions;
 - data model, API catalog, and integrations;
 - client matrix (`client-matrix.md`) when behavior differs per client;
-- security review and quality/deployment notes;
+- security review, quality gates, deployment strategy (`deployment.md`), and debugging guide (`debugging.md`);
+- coding standards (`coding-standards/`: overview and eight topic pages), code review guide, review findings (`RF-NNN`), and technical debt (`TD-NNN`);
+- SEO and AEO guides when the project has public web pages;
 - open questions and analysis log.
 
 Maintain `project-management/` or an existing issue tracker for backlog, risks, decisions, and progress. Use stable local task IDs such as `PIDA-001`; do not invent external issue IDs.
@@ -44,7 +46,7 @@ For each task:
 1. Read relevant instructions and validate project docs against current code.
 2. Define scope, dependencies, acceptance criteria, and a test plan.
 3. Trace callers, data flows, permissions, persistence, integrations, affected clients, and compatibility.
-4. Implement the smallest complete change using existing conventions.
+4. Implement the smallest complete change using existing conventions and the rules in `docs/project-intelligence/coding-standards/`.
 5. Add/update appropriate tests; never delete or weaken tests to get a pass.
 6. Run relevant tests and checks available in the repo.
 7. Review the diff for accidental changes, secrets, security issues, API/schema risks, and unrelated refactors.

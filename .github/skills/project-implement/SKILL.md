@@ -15,7 +15,7 @@ In the skills folder: `project-audit/reference/knowledge-base-guide.md` (which p
 ## Before you start
 
 1. Run `git status --short --branch`. Note uncommitted changes that are not yours and leave them alone.
-2. Read `AGENTS.md` / `CLAUDE.md` and nested instructions near the code, then `project.md`, the page of each sub-project you will touch, `project-overview.md`, `repository-map.md`, `quality-and-deployment.md`, and the knowledge pages relevant to the task (feature, API, data model, security, and `client-matrix.md` when the code serves several clients).
+2. Read `AGENTS.md` / `CLAUDE.md` and nested instructions near the code, then `project.md`, the page of each sub-project you will touch, `project-overview.md`, `repository-map.md`, `quality-and-deployment.md`, and the knowledge pages relevant to the task (feature, API, data model, security, and `client-matrix.md` when the code serves several clients), the `coding-standards/` pages, and open items in `review-findings.md` and `tech-debt.md` for the files you will touch.
 3. If the knowledge base or `project-management/` is missing, create them from the templates. At minimum fill `repository-map.md` and `quality-and-deployment.md` for the affected area, because you need the conventions and test commands. Recommend `/project-audit` for full coverage.
 4. Validate the docs against current code. When they disagree, the code wins: note the drift and fix the docs in step 10.
 
@@ -25,7 +25,7 @@ In the skills folder: `project-audit/reference/knowledge-base-guide.md` (which p
 2. **Start**: set the task to `In Progress` and write the plan (files to change, tests to add, commands to run) into `PROGRESS.md`.
 3. **Trace** callers, data flows, permissions, tenant boundaries, configuration, error handling, logging, and backward compatibility for every symbol you will change. Identify which clients the change affects: client-specific branches, per-client config or flags, and client-specific folders (discovery checklist section 10). A change to shared code reaches every client unless gated. If the task targets one client, keep other clients' behavior unchanged and say how you verified that. When the client scope is unclear and the change alters behavior, ask.
 4. **Implement** the smallest complete change:
-   - follow existing patterns for structure, naming, dependency injection, error handling, logging, and formatting;
+   - follow the `coding-standards/` pages and existing patterns for layering, async, structure, comments, constants, error handling, logging, naming, and formatting; do not copy a pattern listed there as a deviation;
    - preserve public API and schema compatibility unless the task explicitly changes it;
    - write migrations to be reversible or document the rollback;
    - add new configuration as variable names with placeholders in example files, never real values;
@@ -46,7 +46,12 @@ In the skills folder: `project-audit/reference/knowledge-base-guide.md` (which p
 | external calls or webhooks | `integrations.md` |
 | client-specific code, config, or flags, or learned which client has what | `client-matrix.md`, the `Clients` column of `feature-inventory.md` |
 | auth, permissions, secrets handling | `security-review.md` |
-| build, test, CI, config, deployment | `quality-and-deployment.md` |
+| build, test, CI checks, local setup | `quality-and-deployment.md` |
+| pipelines, environments, release, rollback, infrastructure | `deployment.md` |
+| how to run, debug, or seed the project locally | `debugging.md` |
+| fixed a review finding or paid down debt; or noticed new debt | `review-findings.md` (status, evidence) and `tech-debt.md` |
+| a convention the team agreed to change | the matching `coding-standards/` page and `DECISIONS.md` |
+| public pages, meta tags, structured data, `robots.txt`, sitemaps | `seo-guide.md`, `aeo-guide.md` |
 | component boundaries or a significant choice | `architecture.md`, `DECISIONS.md` |
 | anything uncertain or risky | `open-questions.md`, `RISKS.md` |
 

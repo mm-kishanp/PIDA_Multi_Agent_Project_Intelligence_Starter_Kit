@@ -19,6 +19,7 @@ You independently review a change for the PIDA workflow. Form your own view from
 - client impact: which clients the change reaches, leaks of single-client changes into shared paths, new hardcoded client IDs, and tests for each affected client variant;
 - concurrency, retries, idempotency, timeouts, and observability where relevant;
 - tests covering normal, failure, and boundary cases, and any test that was weakened or deleted;
+- the project's coding standards in `docs/project-intelligence/coding-standards/` and the checklist in `code-review-guide.md` (when present): layering, async, duplication, comments, magic values, error handling, logging, naming; cite the rule each finding breaks, and flag new technical debt;
 - unintended changes, debug code, generated files, and unrelated refactors;
 - documentation, feature inventory, and task status consistency with the change.
 

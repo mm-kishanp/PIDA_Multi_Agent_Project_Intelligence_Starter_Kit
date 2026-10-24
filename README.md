@@ -302,7 +302,19 @@ docs/project-intelligence/
   integrations.md            external systems
   client-matrix.md           clients and what works for which client
   security-review.md         security surfaces and findings
-  quality-and-deployment.md  setup, quality gates, CI/CD, environments, rollback
+  quality-and-deployment.md  local setup, quality gates, CI checks
+  deployment.md              deployment strategy and how it is deployed: environments, pipelines, release, rollback
+  debugging.md               how to debug each part of the project, logs, test data, common problems
+  coding-standards/          how the code follows its standards and what to change, one page per topic:
+    overview.md                scorecard, how the code is implemented, top recommended changes
+    architecture-and-layering.md, async-await.md, code-structure-and-duplication.md,
+    commenting-and-documentation.md, constants-and-magic-values.md,
+    error-handling-and-security.md, logging.md, naming-and-code-hygiene.md
+  code-review-guide.md       how reviews work here and the review checklist
+  review-findings.md         RF-NNN findings from audits and reviews, with status
+  tech-debt.md               TD-NNN technical debt register and hotspots
+  seo-guide.md               search-engine readiness of public pages (or Not applicable)
+  aeo-guide.md               readiness for AI assistants and answer engines (or Not applicable)
   open-questions.md          unknowns that need an answer
   analysis-log.md            history of audits and refreshes
   features/FEAT-NNN-*.md     one page per feature: behavior, entry points, data, clients, tests, gaps
@@ -318,7 +330,8 @@ How to read it:
 - **Verified** means backed by a cited file, test, or config. **Inferred** gives a reason and a confidence level. **Unknown** says what was checked and how to find out.
 - Feature status is one of `Implemented`, `Partial`, `Planned`, `Deprecated`, or `Unknown`.
 - Task status is one of `Proposed`, `Ready`, `In Progress`, `Blocked`, `In Review`, `Done`, or `Deferred`. `Done` requires passing verification.
-- IDs are stable and never reused: `FEAT`, `FR`/`NFR`, `CLIENT`, `INT`, `SEC`, `Q`, `R`, `ADR`, `PIDA`.
+- IDs are stable and never reused: `FEAT`, `FR`/`NFR`, `CLIENT`, `INT`, `RF` (review findings), `TD` (tech debt), `SEC`, `Q`, `R`, `ADR`, `PIDA`.
+- Every `/project-audit` creates or re-reviews all of these pages, including the coding standards, deployment, debugging, and SEO/AEO guides, and re-checks open findings and debt.
 
 Commit these files. They are meant to be reviewed in pull requests like code. If your repository already has equivalents (an `ARCHITECTURE.md`, ADR folder, OpenAPI spec, or issue tracker), PIDA links to them instead of duplicating them.
 

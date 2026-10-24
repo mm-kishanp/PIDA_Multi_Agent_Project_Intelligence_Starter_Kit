@@ -22,13 +22,25 @@ docs/project-intelligence/
   feature-inventory.md       every capability with status and evidence
   features/FEAT-NNN-<slug>.md  one page per feature: behavior, entry points, data, tests, clients
   requirements.md            reverse-engineered goals, roles, functional and non-functional requirements
-  architecture.md            components, key flows (Mermaid), trust boundaries, technical debt
+  architecture.md            components, key flows (Mermaid), trust boundaries, architectural risks
   data-model.md              stores, entities, relationships, migrations
   api-catalog.md             endpoints, events, contracts, auth
   integrations.md            external systems
   client-matrix.md           clients served, client-specific code, what works for which client
   security-review.md         security surfaces and findings
-  quality-and-deployment.md  local setup, quality gates, CI/CD, environments, rollback
+  quality-and-deployment.md  local setup, quality gates, CI checks
+  deployment.md              deployment strategy, environments, pipelines, release, rollback, observability
+  debugging.md               how to debug each sub-project, logs, test data, common problems
+  coding-standards/          overview.md + architecture-and-layering, async-await,
+                             code-structure-and-duplication, commenting-and-documentation,
+                             constants-and-magic-values, error-handling-and-security,
+                             logging, naming-and-code-hygiene: standard, current practice,
+                             deviations, recommended changes
+  code-review-guide.md       how reviews work here and the review checklist
+  review-findings.md         RF-NNN findings from audits and reviews, with status
+  tech-debt.md               TD-NNN debt register, hotspots, paid-down log
+  seo-guide.md               search-engine readiness of public pages (or Not applicable)
+  aeo-guide.md               answer-engine / AI-assistant readiness (or Not applicable)
   open-questions.md          unknowns that matter
   analysis-log.md            record of this audit
 project-management/
@@ -57,7 +69,7 @@ project-management/
 1. Confirm the repository root; run `git status --short --branch` and `git log --oneline -20`. Note uncommitted changes and leave them untouched.
 2. Determine the mode:
    - **First audit**: the target folders are missing, or their pages still contain `YYYY-MM-DD` and bracketed placeholders.
-   - **Re-audit**: pages contain real content. Verify and update in place; never rewrite from scratch. For a small update, suggest `/project-refresh` instead.
+   - **Re-audit**: pages contain real content. Verify and update in place; never rewrite from scratch. Re-review the coding-standards pages, deployment and debugging guides, and SEO/AEO guides against the current code, and re-check every open `RF-NNN` and `TD-NNN`: mark it Fixed or Paid down only with evidence. For a small update, suggest `/project-refresh` instead.
 3. Look for equivalent existing documentation and trackers and plan to link to them.
 4. Triage size with the checklist (section 9) and choose a single pass, phased, or parallel approach.
 5. Create `project-management/PROGRESS.md` from the template if missing, and record the goal "Project audit", the mode, and the plan. Update it after each phase in large repositories.
@@ -97,9 +109,26 @@ Read the instruction files and documentation listed in checklist section 2. Note
 
 Fill every row of the surfaces table in `security-review.md`: authentication, authorization, tenant/data isolation, input validation and injection, secret management, sensitive data in logs, dependencies and supply chain, transport/CORS/headers. Record concrete concerns as findings with severity. For deeper analysis of a concern, follow the security-review skill.
 
-## Phase 6: Quality gates and delivery
+## Phase 6: Quality gates, deployment, and debugging
 
-Tests (frameworks, locations, rough counts per area), coverage configuration, lint/format/type tools, pre-commit hooks, CI pipelines with their exact commands and triggers, environments, deployment mechanism, release and rollback process, observability. Map tests to the important features (checklist section 7).
+- **Quality gates** (`quality-and-deployment.md`): tests (frameworks, locations, rough counts per area), coverage configuration, lint/format/type tools, pre-commit hooks, CI checks with their exact commands and triggers. Map tests to the important features (checklist section 7).
+- **Deployment** (`deployment.md`): the deployment strategy in plain words, what is deployed per sub-project, environments, pipelines and approvals, infrastructure, configuration names, migrations in delivery, release, rollback, post-deploy verification, observability, and manual steps. Follow the deployment skill's discovery list.
+- **Debugging** (`debugging.md`): how to run each sub-project under a debugger, attach, local services and test data, logs, debugging tests and jobs, read-only diagnosis of deployed environments, and common problems (checklist section 12).
+
+## Phase 6a: Code quality and standards
+
+Follow checklist section 11 and *Coding standards, reviews, and technical debt* in the guide.
+
+1. Find the documented standards and how they are enforced.
+2. Sample code per sub-project and layer, and assess each of the eight topics: architecture and layering, async and await, code structure and duplication, commenting and documentation, constants and magic values, error handling and security, logging, naming and code hygiene.
+3. For each topic record the standard (documented or inferred), the check results, how the code does it today with good examples, deviations with `path:line` and severity, and recommended changes to the code or to the standard.
+4. Summarize how the code is implemented and the top recommended changes in `coding-standards/overview.md`.
+5. Describe how reviews work here and build the review checklist in `code-review-guide.md`.
+6. Log concrete defects and deviations worth tracking in `review-findings.md` (`RF-NNN`, source `Audit`) and long-lived structural problems in `tech-debt.md` (`TD-NNN`), including outdated dependencies, hotspots, and duplicated per-client code.
+
+## Phase 6b: Web presence (SEO and AEO)
+
+If any sub-project serves public web pages or content, assess search-engine readiness in `seo-guide.md` and answer-engine / AI-assistant readiness in `aeo-guide.md` (checklist section 13). Otherwise mark both `Not applicable — <evidence>`. Record the current AI-crawler policy without changing it, and ask the user if the intent is unclear.
 
 ## Phase 7: Synthesis — what the project is
 
@@ -112,7 +141,7 @@ Tests (frameworks, locations, rough counts per area), coverage configuration, li
 
 ## Phase 8: Write the knowledge base
 
-Create `docs/project-intelligence/` and every page in the file map, following the creation rules in the guide. Recommended order: repository-map, architecture, data-model, api-catalog, integrations, client-matrix, security-review, quality-and-deployment, feature-inventory, feature pages, sub-project pages, requirements, project-overview, project, open-questions, analysis-log, README.
+Create `docs/project-intelligence/` and every page in the file map, following the creation rules in the guide. Recommended order: repository-map, architecture, data-model, api-catalog, integrations, client-matrix, security-review, quality-and-deployment, deployment, debugging, coding-standards pages, code-review-guide, review-findings, tech-debt, seo-guide, aeo-guide, feature-inventory, feature pages, sub-project pages, requirements, project-overview, project, open-questions, analysis-log, README.
 
 - Write `project.md` for every repository, in plain language a non-developer can follow. Keep technical detail in `project-overview.md` and link between them.
 - When there is more than one sub-project, write `projects/<slug>/project.md` (template `sub-project.md`) for **every** sub-project and list them all in `project.md`. Follow *Project pages* in the guide for what counts, the order for large repositories, and how to record pages still remaining.
@@ -125,9 +154,9 @@ Create `docs/project-intelligence/` and every page in the file map, following th
 ## Phase 9: Seed project management
 
 Create the four files from `templates/project-management/` if missing, and remove the template example entries.
-- **BACKLOG.md**: one `Proposed` task per actionable gap found (critical paths without tests, security concerns, partial or broken features, CI gaps, documentation gaps), with priority, evidence, acceptance criteria, and test plan. Do not invent product features the user did not ask for.
+- **BACKLOG.md**: one `Proposed` task per actionable gap found (critical paths without tests, security concerns, partial or broken features, CI gaps, documentation gaps, High or Critical review findings, high-priority tech debt, top coding-standard changes, deployment and SEO/AEO improvements), with priority, evidence, acceptance criteria, and test plan. Do not invent product features the user did not ask for.
 - **RISKS.md**: risks from findings with likelihood, impact, evidence, and mitigation.
-- **DECISIONS.md**: link existing ADRs. Record major pre-existing choices (framework, data store, auth provider, hosting) as `Accepted (pre-existing, inferred from code)` with evidence.
+- **DECISIONS.md**: link existing ADRs. Record major pre-existing choices (framework, data store, auth provider, hosting) as `Accepted (pre-existing, inferred from code)` with evidence. Record proposed changes to the coding standards as `Proposed` ADRs.
 - **PROGRESS.md**: audit outcome, files written, open questions for the user, and next exact steps.
 
 ## Phase 10: Verify the output
@@ -141,13 +170,16 @@ Run the final checks in the guide: the freshness script if present, the placehol
 3. **Scope**: inspected, sampled, excluded, not inspected.
 4. **Features**: counts per status, plus the notable Partial and Unknown ones; feature pages written, and any still remaining.
 5. **Clients**: clients found and how they differ, or "single-client"; mismatches between the user's list and the code.
-6. **Top risks and security concerns**, with severity.
-7. **Files created and updated**.
-8. **Questions only the user can answer**.
-9. **Recommended next steps**: for example, a P0 backlog task, `/project-plan <goal>`, or a deeper `security-review`.
+6. **Code quality**: the coding-standards scorecard, the top recommended changes, review findings by severity, and the top technical-debt items.
+7. **Deployment and debugging**: the deployment strategy in one or two sentences, rollback status, and anything that could not be verified.
+8. **SEO and AEO**: the main findings, or "Not applicable".
+9. **Top risks and security concerns**, with severity.
+10. **Files created and updated**.
+11. **Questions only the user can answer**.
+12. **Recommended next steps**: for example, a P0 backlog task, `/project-plan <goal>`, or a deeper `security-review`.
 
 Never claim the audit is exhaustive when areas were sampled or skipped.
 
 ## Large repositories and subagents
 
-When the platform supports subagents (Claude Code: `pida-auditor`), split the work by area (each sub-project, service, or package, plus cross-cutting data, API, infrastructure, clients, and tests) and run the areas in parallel. Give each subagent its area, the checklist path, and the report format it must return. Merge the results yourself. Re-check the evidence for any claim that sets a feature to `Implemented` or a risk to High or Critical. Without subagents, audit the areas sequentially and record progress after each one.
+When the platform supports subagents (Claude Code: `pida-auditor`), split the work by area (each sub-project, service, or package, plus cross-cutting data, API, infrastructure, clients, tests, code quality, and web presence) and run the areas in parallel. Give each subagent its area, the checklist path, and the report format it must return. Merge the results yourself. Re-check the evidence for any claim that sets a feature to `Implemented` or a risk to High or Critical. Without subagents, audit the areas sequentially and record progress after each one.

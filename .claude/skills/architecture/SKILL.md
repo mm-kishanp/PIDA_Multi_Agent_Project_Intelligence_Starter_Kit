@@ -28,7 +28,7 @@ In the skills folder: `project-audit/reference/knowledge-base-guide.md`, `projec
 4. **System context**: a Mermaid `flowchart` with users, the system's runtime units, data stores, and external systems.
 5. **Data and trust boundaries**: where authentication happens, where authorization and tenant scope are enforced, what crosses the network, and where secrets come from.
 6. **Cross-cutting concerns**: configuration, error handling, logging and telemetry, caching, background processing, feature flags.
-7. **Constraints and debt**: compatibility, performance, regulatory, and operational constraints; technical debt with evidence, impact, and suggested action (debt items worth doing become `Proposed` backlog tasks).
+7. **Constraints and debt**: compatibility, performance, regulatory, and operational constraints; technical debt with evidence, impact, and suggested action, recorded in `tech-debt.md` as `TD-NNN` (debt items worth doing become `Proposed` backlog tasks). Code-level layering rules belong in `coding-standards/architecture-and-layering.md`.
 8. **Decisions**: link existing ADRs. Record major pre-existing choices as `Accepted (pre-existing, inferred from code)` in `DECISIONS.md`.
 9. Write `architecture.md` and `integrations.md` following the guide's standard.
 
