@@ -1,0 +1,3 @@
+# Optional PIDA local scratch artifacts
+# Merge relevant entries into the repository's existing .gitignore if desired.
+.pida-tmp/

@@ -1,0 +1,27 @@
+# Optional PIDA consistency check. Fails when native skill copies drift from
+# .agents/skills. Delete this file if your repository does not want it.
+name: PIDA checks
+
+on:
+  pull_request:
+    paths:
+      - ".agents/skills/**"
+      - ".claude/skills/**"
+      - ".github/skills/**"
+      - ".agent/skills/**"
+      - "scripts/sync-skills.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  skills-in-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Check skill copies match .agents/skills
+        run: python scripts/sync-skills.py --check
