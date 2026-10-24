@@ -2,10 +2,12 @@
 
 Last reviewed: YYYY-MM-DD
 
-| ID | Feature/module | User outcome | Status | Evidence | Confidence | Gaps / follow-up |
-|---|---|---|---|---|---|---|
-| FEAT-001 | [Name] | [Outcome] | Unknown | [paths/tests] | Low | [What to verify] |
+| ID | Feature/module | User outcome | Status | Clients | Evidence | Confidence | Gaps / follow-up |
+|---|---|---|---|---|---|---|---|
+| FEAT-001 | [Name] | [Outcome] | Unknown | [All / CLIENT-NNN list / see client-matrix] | [paths/tests] | Low | [What to verify] |
 
 Allowed statuses: Implemented, Partial, Planned, Deprecated, Unknown.
+
+`Clients` is `All` when behavior is the same for every client; otherwise list the clients that have the feature and detail the differences in `client-matrix.md`. Use `Not applicable` for single-client code.
 
 Do not mark `Implemented` solely because a feature is described in docs or UI. Verify its code path and meaningful tests.

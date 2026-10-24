@@ -41,6 +41,7 @@ In the skills folder (for example `.claude/skills/` or `.agents/skills/`):
 - **Architecture**: describe current state only, unless asked for a proposal. Use Mermaid for 2–5 key flows. Follow the architecture skill for depth.
 - **API catalog**: method, route or topic, auth, request and response schema, status codes, validation, side effects, evidence. Follow the api-development skill for depth.
 - **Data model**: stores, entities, keys, relationships, constraints, indexes, tenancy, migrations, retention, sensitive fields. Follow the database-development skill for depth.
+- **Client matrix**: list every client from the user and from code, how each is selected at runtime, the client-specific code locations, and Enabled / Disabled / Customized per feature. User-stated facts stay `Inferred (user-stated)` until a cited path confirms them. Follow *Client information* in the guide and checklist section 10.
 - **Quality and deployment**: include only commands that were discovered in config or verified by running. Say which.
 
 ## Rules

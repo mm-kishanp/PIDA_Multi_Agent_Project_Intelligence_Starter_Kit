@@ -26,16 +26,24 @@ Use `docs/project-intelligence/` unless the repository has an equivalent source 
 - feature inventory and requirements;
 - architecture and architecture decisions;
 - data model, API catalog, and integrations;
+- client matrix (`client-matrix.md`) when behavior differs per client;
 - security review and quality/deployment notes;
 - open questions and analysis log.
 
 Maintain `project-management/` or an existing issue tracker for backlog, risks, decisions, and progress. Use stable local task IDs such as `PIDA-001`; do not invent external issue IDs.
 
+## Clients
+When the codebase serves several clients (customers, tenants, brands, partners, or deployments), maintain `docs/project-intelligence/client-matrix.md`: the clients, how each is selected at runtime, client-specific code and configuration locations, and which features are Enabled, Disabled, or Customized per client.
+- Whenever the user mentions clients or gives a client list, record each client there in the same session, labelled `Provided by user, <date>`; keep user-stated behavior `Inferred (user-stated)` until code confirms it.
+- Verify against code, config, and flags; put mismatches between the user's list and the code in open questions.
+- Before changing code, determine which clients the change reaches; keep untargeted clients' behavior unchanged and test each affected client variant.
+- Store client names, codes, and behavior only, never contacts, contract terms, pricing, credentials, or customer data.
+
 ## Implementation
 For each task:
 1. Read relevant instructions and validate project docs against current code.
 2. Define scope, dependencies, acceptance criteria, and a test plan.
-3. Trace callers, data flows, permissions, persistence, integrations, and compatibility.
+3. Trace callers, data flows, permissions, persistence, integrations, affected clients, and compatibility.
 4. Implement the smallest complete change using existing conventions.
 5. Add/update appropriate tests; never delete or weaken tests to get a pass.
 6. Run relevant tests and checks available in the repo.

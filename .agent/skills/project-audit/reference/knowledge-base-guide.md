@@ -18,6 +18,7 @@ Templates are in this skill's `templates/` folder. Paths in the **Target** colum
 | `data-model.md` | `docs/project-intelligence/data-model.md` | database-development |
 | `api-catalog.md` | `docs/project-intelligence/api-catalog.md` | api-development |
 | `integrations.md` | `docs/project-intelligence/integrations.md` | architecture, api-development |
+| `client-matrix.md` | `docs/project-intelligence/client-matrix.md` | project-audit, project-docs, project-implement (any skill that learns client facts) |
 | `security-review.md` | `docs/project-intelligence/security-review.md` | security-review |
 | `quality-and-deployment.md` | `docs/project-intelligence/quality-and-deployment.md` | testing, deployment |
 | `open-questions.md` | `docs/project-intelligence/open-questions.md` | all skills |
@@ -44,9 +45,19 @@ Any skill that needs a page that does not exist yet creates it from the template
 7. **Create every page in the file map during an audit**, even when the answer is short. A one-line `Not applicable` page tells later readers the area was checked.
 8. **No secrets or production data**, ever. Record variable names and secret locations only.
 
+## Client information
+
+`client-matrix.md` records which clients the codebase serves and what works for which client. Every skill keeps it current:
+
+1. **Capture user-provided client lists.** Whenever the user names clients (in a request, a pasted list, a file, or a remark such as "client X uses SSO, client Y doesn't"), record each one in `client-matrix.md` in the same session: add a row to *Client list sources* and *Clients* labelled `Provided by user, <date>`, and record any stated behavior as `Inferred (user-stated)` until code confirms it. Create the page from the template if it does not exist. Do not wait for an audit.
+2. **Verify against code.** For each client, find how it is selected at runtime and which code paths, configuration keys, flags, and integrations differ. Promote a user-stated fact to Verified only with a cited path. When the code contradicts the user's statement, record both and add a `Q-NNN`.
+3. **Reconcile lists.** Clients found in code or config but missing from the user's list, and listed clients with no trace in code, both go to `open-questions.md`.
+4. **Keep the matrix in step with features.** When a feature's availability or behavior differs by client, fill its row in *Feature availability by client* and the *Clients* column of `feature-inventory.md`.
+5. **Names and codes only.** Never store client contacts, contract terms, pricing, credentials, or customer records. If the user marks client names as confidential, use the codes found in source instead.
+
 ## IDs
 
-Use stable, never-reused IDs: `FEAT-NNN` (features), `BR-NNN` (business goals), `FR-NNN` / `NFR-NNN` (requirements), `INT-NNN` (integrations), `SEC-NNN` (security findings), `Q-NNN` (open questions), `R-NNN` (risks), `ADR-NNN` (decisions), `PIDA-NNN` (backlog tasks). Continue from the highest existing number.
+Use stable, never-reused IDs: `FEAT-NNN` (features), `BR-NNN` (business goals), `FR-NNN` / `NFR-NNN` (requirements), `INT-NNN` (integrations), `CLIENT-NNN` (clients), `SEC-NNN` (security findings), `Q-NNN` (open questions), `R-NNN` (risks), `ADR-NNN` (decisions), `PIDA-NNN` (backlog tasks). Continue from the highest existing number.
 
 ## Minimum standard per page
 
@@ -60,6 +71,7 @@ Use stable, never-reused IDs: `FEAT-NNN` (features), `BR-NNN` (business goals), 
 | data-model | Every data store; entities with keys, relationships, sensitive fields, and tenant/ownership rules; migration mechanism and latest migration; Mermaid `erDiagram` when there are more than three entities | ORM models, schema files, migrations |
 | api-catalog | Every externally reachable endpoint, event, or contract with auth; for more than ~50, group by resource with counts and detail the critical ones | Route registrations, controllers, OpenAPI/GraphQL/proto files, consumers |
 | integrations | Every external system, direction, auth method, config names, failure handling | HTTP clients, SDKs, webhooks, queues |
+| client-matrix | Every known client (from the user and from code) with its key in source; how a client is selected at runtime; every client-specific code location; which features are Enabled / Disabled / Customized per client; per-client customizations, integrations, config key names, and tests; or `Not applicable — <evidence>` for single-client code | User-provided lists, per-client config and folders, feature flags, tenant settings, client-code conditionals, seeds, deployment variants |
 | security-review | Every surface row filled with a status; findings with severity and evidence; areas not reviewed | Auth middleware, policies, data access, config, dependencies, CI |
 | quality-and-deployment | Local setup, quality gates with exact commands and whether they were run, pipelines, environments, release and rollback, observability, gaps | CI files, manifests, IaC, Dockerfiles |
 | open-questions | Every Unknown that affects behavior, security, data, or delivery | All pages |
@@ -85,3 +97,4 @@ Use stable, never-reused IDs: `FEAT-NNN` (features), `BR-NNN` (business goals), 
 2. Search the files you wrote for leftover placeholders: `YYYY-MM-DD`, `[Name]`, `[Purpose]`, `[Path`, `FEAT-001 | [`, `PIDA-001 — [`.
 3. Search the files you wrote for secret-like content: `password=`, `secret=`, `token=`, `AKIA`, `-----BEGIN`, `Server=`, `mongodb://`, `postgres://`. Remove any values.
 4. Confirm every Verified claim cites a path, and every Inferred claim gives a reason and confidence.
+5. Confirm every client the user named in this session appears in `client-matrix.md`.

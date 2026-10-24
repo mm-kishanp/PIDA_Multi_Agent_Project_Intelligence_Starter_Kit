@@ -32,6 +32,12 @@ Last reviewed: YYYY-MM-DD
 ## Configuration and feature flags
 [Variable/flag names only, defaults, where read.]
 
+## Client availability
+| Client | Enabled / Disabled / Customized / Unknown | Difference | Evidence |
+|---|---|---|---|
+
+[Write "Same for all clients" or "Not applicable — single-client" when verified. Keep in step with `client-matrix.md`.]
+
 ## Tests
 | Test file / name | Type | What it proves |
 |---|---|---|

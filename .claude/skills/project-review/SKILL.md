@@ -26,11 +26,12 @@ In the skills folder: `project-audit/reference/knowledge-base-guide.md` and `pro
 | Conventions | Does it follow the project's existing structure, naming, error handling, logging, and dependency patterns? |
 | Security | Authentication and authorization on new paths; tenant and ownership checks on every data access; input validation; injection (SQL, command, template, path); SSRF; unsafe deserialization; secrets in code, config, or logs; sensitive data in logs or errors |
 | Compatibility | Public API, event, and schema changes; migration safety (locks, backfill, rollback); configuration changes and defaults; feature flags |
+| Client impact | Which clients the change reaches (check `client-matrix.md` and client-specific code); does a change meant for one client leak to others through shared code; are client branches, per-client config, and flags updated consistently; new hardcoded client IDs; tests for each affected client variant |
 | Reliability | Retries, idempotency, timeouts, transactions, concurrency, resource cleanup, observability for new failure modes |
 | Performance | N+1 queries, unbounded queries or loops, missing indexes, large payloads, work on hot paths |
 | Tests | New behavior covered for normal, failure, boundary, and authorization cases; tests deterministic; no test deleted, skipped, or weakened |
 | Diff hygiene | Unrelated refactors, debug code, generated or build artifacts, formatting churn, accidental files, other people's uncommitted changes |
-| Documentation | Feature status, API catalog, data model, task status, and decisions consistent with the change |
+| Documentation | Feature status, API catalog, data model, client matrix, task status, and decisions consistent with the change |
 
 ## Independent review
 

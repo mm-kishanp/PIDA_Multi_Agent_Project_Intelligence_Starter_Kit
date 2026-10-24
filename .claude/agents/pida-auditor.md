@@ -23,5 +23,6 @@ Return Markdown with these sections, citing paths instead of pasting large code 
 4. **Feature candidates**: table of Feature | Status (Implemented / Partial / Planned / Deprecated / Unknown) | Evidence | Gaps.
 5. **Security-sensitive surfaces**: auth, authorization, tenant isolation, input handling, secret locations, sensitive logging.
 6. **Data, API, and integration touchpoints**.
-7. **Tests and commands discovered**: say whether each command was read from config or actually run (normally not run).
-8. **Open questions** that need evidence or a product decision.
+7. **Client-specific code**: clients referenced in this area, how each is selected at runtime, client-specific paths, config keys, and flags, and which features differ per client (discovery checklist section 10). If the caller gave a client list, search for each client and report hits and misses.
+8. **Tests and commands discovered**: say whether each command was read from config or actually run (normally not run).
+9. **Open questions** that need evidence or a product decision.

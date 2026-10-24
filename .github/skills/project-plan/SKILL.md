@@ -14,14 +14,14 @@ In the skills folder: `project-audit/reference/knowledge-base-guide.md` (file ma
 
 ## Before you start
 
-1. Read `AGENTS.md` / `CLAUDE.md`, `project-overview.md`, `repository-map.md`, `feature-inventory.md`, `requirements.md`, and `architecture.md` in `docs/project-intelligence/`, plus `project-management/BACKLOG.md`, `RISKS.md`, and `DECISIONS.md`.
+1. Read `AGENTS.md` / `CLAUDE.md`, `project-overview.md`, `repository-map.md`, `feature-inventory.md`, `requirements.md`, `architecture.md`, and `client-matrix.md` in `docs/project-intelligence/`, plus `project-management/BACKLOG.md`, `RISKS.md`, and `DECISIONS.md`.
 2. If any are missing or still templates, discover the area the goal touches using the checklist. Create `project-management/` and its four files from the templates (removing example entries), and create the knowledge pages you need for this plan, filled for that area. Recommend `/project-audit` if the project has never been audited.
 3. Check the backlog for existing tasks that overlap the goal. Extend or reference them; do not duplicate.
 
 ## Workflow
 
 1. **Understand the goal**: who benefits, the observable outcome, and measurable success criteria. Write them as `BR-NNN` / `FR-NNN` / `NFR-NNN` entries in `requirements.md`, using Given/When/Then for functional behavior.
-2. **Map the current state**: inspect the related code, existing features, conventions, data model, APIs, permissions, configuration, and tests. Cite paths. Note what can be reused.
+2. **Map the current state**: inspect the related code, existing features, conventions, data model, APIs, permissions, configuration, and tests. Cite paths. Note what can be reused. Establish the client scope: which clients want this, which must not be affected, and how existing client-specific behavior (checklist section 10) constrains the design. If the user names clients, record them in `client-matrix.md`.
 3. **Resolve ambiguity**:
    - Ask one focused question when an answer would change data handling, security, compatibility, or major product behavior.
    - Otherwise record an explicit assumption in the plan and in `open-questions.md`, and continue.
@@ -31,6 +31,7 @@ In the skills folder: `project-audit/reference/knowledge-base-guide.md` (file ma
    - stable `PIDA-NNN` ID, continuing from the highest existing number; never invent external tracker IDs;
    - status (`Ready` if unblocked, `Proposed` if it needs confirmation), priority P0–P3, outcome, scope and out-of-scope;
    - dependencies, likely files and components (evidence-backed paths);
+   - client scope (`All`, specific `CLIENT-NNN`, or `Not applicable`) when the code serves several clients;
    - acceptance criteria as observable results (`AC-1`, `AC-2`, …);
    - test plan naming the test types and the exact commands from `quality-and-deployment.md`;
    - risks, and an estimate range with assumptions and confidence.

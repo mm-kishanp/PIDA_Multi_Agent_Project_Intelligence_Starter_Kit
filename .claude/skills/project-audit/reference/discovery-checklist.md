@@ -66,6 +66,7 @@ For each unit record: how it starts, configuration source, what it depends on, a
 | Authorization | `Authorize`, `AllowAnonymous`, `policy`, `role`, `permission`, `can(`, `@PreAuthorize`, guards, middleware |
 | Tenancy / ownership | `tenant`, `TenantId`, `organization_id`, `account_id`, `owner_id`, global query filters, row-level security |
 | Persistence | ORM context/models (EF Core `DbContext`, `schema.prisma`, TypeORM, Sequelize, SQLAlchemy, Django models, ActiveRecord, Hibernate, GORM), migration folders, raw SQL |
+| Client-specific behavior | see section 10 |
 | Integrations | HTTP client factories, SDK imports (payments, email, SMS, storage, cloud), message brokers, webhook handlers |
 | Configuration | `process.env`, `os.environ`, `IConfiguration`, `GetEnvironmentVariable`, `.env.example`, feature-flag SDKs |
 | Errors and logging | global exception handlers, logger setup, OpenTelemetry/APM, log statements near sensitive data |
@@ -101,3 +102,24 @@ Never open files likely to contain secret values: `.env` (`.env.example` and `.e
 | Under ~500 | Single pass over all non-excluded areas. |
 | ~500–5,000 | Phase by top-level area; log progress in `analysis-log.md` and `PROGRESS.md` after each area. |
 | Over ~5,000 or monorepo | Audit area by area, in parallel subagents where supported; sample representative modules and state the sampling explicitly. |
+
+## 10. Client-specific code
+
+Find out whether the codebase serves several clients (customers, tenants, brands, partners, or deployments) with different behavior, and record it in `client-matrix.md`.
+
+1. **Start from the user's list.** If the user named clients, search for each name, abbreviation, and likely code (case-insensitive, also in kebab, snake, and Pascal case). Every hit is a lead to a client-specific path.
+2. **Search for the selection mechanism** — how the running code knows which client it is serving:
+
+   | Mechanism | Search for |
+   |---|---|
+   | Client identifiers | `client`, `customer`, `tenant`, `brand`, `partner`, `org`, `ClientId`, `ClientCode`, `customerKey`, `tenantKey`, `X-Client`, `X-Tenant` |
+   | Per-client folders and files | `clients/`, `customers/`, `tenants/`, `overrides/`, `custom/`, `brands/`, `themes/`, `whitelabel/`, file names containing a client name or code |
+   | Per-client configuration | `appsettings.<Name>.json`, `config/<name>.*`, `.env.<name>.example`, Helm values or Terraform workspaces per client, tenant settings tables and seed data |
+   | Feature flags and toggles | flag SDKs (LaunchDarkly, Unleash, Flagsmith, Azure App Configuration), `isEnabledFor`, `featureFor`, flags keyed by tenant or client |
+   | Conditionals in code | `if (client ==`, `switch (tenant`, `case "<code>"`, comparisons against hardcoded IDs, GUIDs, or domains |
+   | Build and deploy variants | build flavors, conditional-compilation symbols, separate pipelines, Dockerfiles, or app IDs per client |
+   | Branding and content | per-client logos, CSS themes, translation or copy overrides, email templates |
+
+3. **For each client**, record: its key in source; how it is selected at runtime (subdomain, header, login claim, environment variable, build flag, database row); the features it has Enabled, Disabled, or Customized; its client-only integrations and configuration key names; and the tests that exercise its path.
+4. **Flag risks**: hardcoded client IDs in business logic, copy-pasted per-client variants of shared code, client branches without tests, and clients in the user's list with no trace in code (or the reverse).
+5. Per-client values in configuration may be secrets. Record key names only.

@@ -21,6 +21,7 @@ This directory is the evidence-based knowledge base maintained by PIDA.
 - `data-model.md`
 - `api-catalog.md`
 - `integrations.md`
+- `client-matrix.md`
 - `security-review.md`
 - `quality-and-deployment.md`
 - `open-questions.md`

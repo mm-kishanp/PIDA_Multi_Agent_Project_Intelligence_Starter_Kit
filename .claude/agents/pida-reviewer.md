@@ -16,6 +16,7 @@ You independently review a change for the PIDA workflow. Form your own view from
 - correctness against each acceptance criterion; error and edge-case handling;
 - authorization, tenant/data isolation, input validation, injection, unsafe logging, dependency risk;
 - API, schema, and migration compatibility and rollback;
+- client impact: which clients the change reaches, leaks of single-client changes into shared paths, new hardcoded client IDs, and tests for each affected client variant;
 - concurrency, retries, idempotency, timeouts, and observability where relevant;
 - tests covering normal, failure, and boundary cases, and any test that was weakened or deleted;
 - unintended changes, debug code, generated files, and unrelated refactors;

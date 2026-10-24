@@ -15,7 +15,7 @@ In the skills folder: `project-audit/reference/knowledge-base-guide.md` (which p
 ## Before you start
 
 1. Run `git status --short --branch`. Note uncommitted changes that are not yours and leave them alone.
-2. Read `AGENTS.md` / `CLAUDE.md` and nested instructions near the code, then `project-overview.md`, `repository-map.md`, `quality-and-deployment.md`, and the knowledge pages relevant to the task (feature, API, data model, security).
+2. Read `AGENTS.md` / `CLAUDE.md` and nested instructions near the code, then `project-overview.md`, `repository-map.md`, `quality-and-deployment.md`, and the knowledge pages relevant to the task (feature, API, data model, security, and `client-matrix.md` when the code serves several clients).
 3. If the knowledge base or `project-management/` is missing, create them from the templates. At minimum fill `repository-map.md` and `quality-and-deployment.md` for the affected area, because you need the conventions and test commands. Recommend `/project-audit` for full coverage.
 4. Validate the docs against current code. When they disagree, the code wins: note the drift and fix the docs in step 10.
 
@@ -23,14 +23,14 @@ In the skills folder: `project-audit/reference/knowledge-base-guide.md` (which p
 
 1. **Confirm the task**: acceptance criteria, dependencies (are they `Done`?), and out-of-scope items. If a critical ambiguity affects data loss, security, compatibility, or major product behavior, ask one focused question. Otherwise proceed with a documented assumption.
 2. **Start**: set the task to `In Progress` and write the plan (files to change, tests to add, commands to run) into `PROGRESS.md`.
-3. **Trace** callers, data flows, permissions, tenant boundaries, configuration, error handling, logging, and backward compatibility for every symbol you will change.
+3. **Trace** callers, data flows, permissions, tenant boundaries, configuration, error handling, logging, and backward compatibility for every symbol you will change. Identify which clients the change affects: client-specific branches, per-client config or flags, and client-specific folders (discovery checklist section 10). A change to shared code reaches every client unless gated. If the task targets one client, keep other clients' behavior unchanged and say how you verified that. When the client scope is unclear and the change alters behavior, ask.
 4. **Implement** the smallest complete change:
    - follow existing patterns for structure, naming, dependency injection, error handling, logging, and formatting;
    - preserve public API and schema compatibility unless the task explicitly changes it;
    - write migrations to be reversible or document the rollback;
    - add new configuration as variable names with placeholders in example files, never real values;
    - add no new dependency unless needed; explain it in the report and in `DECISIONS.md` if significant.
-5. **Test**: add or update tests for the normal path, failure and validation cases, boundaries, and authorization or tenant isolation where relevant. Follow the testing skill. Never delete, skip, or weaken a test to get a pass.
+5. **Test**: add or update tests for the normal path, failure and validation cases, boundaries, authorization or tenant isolation, and each affected client variant where relevant. Follow the testing skill. Never delete, skip, or weaken a test to get a pass.
 6. **Verify**: run the focused tests first, then the relevant lint, type, build, and broader test commands from `quality-and-deployment.md` or CI. Record exact commands and outcomes. Where subagents are supported (Claude Code: `pida-test-runner`), you may delegate the runs.
 7. **Review your diff** (`git diff`, `git status`): accidental files, debug code, secrets, unrelated refactors, generated artifacts, formatting churn, API or schema risks. For risky changes, consider an independent review (`pida-reviewer` or the project-review skill).
 8. **Check acceptance**: mark each `AC-n` as met, with evidence.
@@ -43,6 +43,7 @@ In the skills folder: `project-audit/reference/knowledge-base-guide.md` (which p
 | routes, contracts, events | `api-catalog.md` |
 | schema, migrations, entities | `data-model.md` |
 | external calls or webhooks | `integrations.md` |
+| client-specific code, config, or flags, or learned which client has what | `client-matrix.md`, the `Clients` column of `feature-inventory.md` |
 | auth, permissions, secrets handling | `security-review.md` |
 | build, test, CI, config, deployment | `quality-and-deployment.md` |
 | component boundaries or a significant choice | `architecture.md`, `DECISIONS.md` |
@@ -56,4 +57,4 @@ Do not push, merge, deploy, change shared infrastructure, run migrations against
 
 ## Report
 
-Behavior delivered; files changed; tests added; commands run with Pass/Fail; acceptance criteria status; docs and backlog updated; known gaps, risks, and manual follow-up.
+Behavior delivered; clients affected (or "all" / "single-client"); files changed; tests added; commands run with Pass/Fail; acceptance criteria status; docs and backlog updated; known gaps, risks, and manual follow-up.

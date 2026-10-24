@@ -64,6 +64,7 @@ Maintain, as applicable:
 - `data-model.md`
 - `api-catalog.md`
 - `integrations.md`
+- `client-matrix.md`
 - `security-review.md`
 - `quality-and-deployment.md`
 - `open-questions.md`
@@ -73,12 +74,20 @@ Maintain project management state in `project-management/` or an existing issue 
 - `BACKLOG.md`, `RISKS.md`, `DECISIONS.md`, `PROGRESS.md`
 Use stable task IDs (e.g. `PIDA-001`). Do not invent issue IDs in an external tracker.
 
+## Clients and client-specific code
+
+When the codebase serves several clients (customers, tenants, brands, partners, or deployments), maintain `docs/project-intelligence/client-matrix.md`: which clients exist, how each is selected at runtime, where client-specific code and configuration live, and which features are Enabled, Disabled, or Customized for each client.
+- Whenever the user mentions clients or gives a client list, record each client in `client-matrix.md` in the same session, labelled `Provided by user, <date>`. Record what the user says works for each client as `Inferred (user-stated)` until code confirms it. Create the page from the template if it is missing.
+- Verify client facts against code, config, and flags. Add clients found in code but missing from the user's list, and listed clients with no trace in code, to `open-questions.md`.
+- Before changing code, determine which clients the change reaches. Shared code affects every client unless gated. Keep other clients' behavior unchanged when a task targets one client, and test each affected client variant.
+- Record client names, codes, and behavior only, never client contacts, contract terms, pricing, credentials, or customer data.
+
 ## Implementation workflow
 
 For every feature, bug, refactor, or maintenance task:
 1. Clarify success criteria from the request; resolve blocking ambiguity only when necessary.
 2. Read relevant project instructions and knowledge files; validate them against current code.
-3. Trace the affected code, dependencies, data flows, and callers.
+3. Trace the affected code, dependencies, data flows, callers, and affected clients.
 4. Create or update a task with scope, dependencies, acceptance criteria, test plan, and status.
 5. Plan the smallest coherent implementation. Avoid unrelated refactors and speculative abstractions.
 6. Implement in the repository's established style. Preserve backward compatibility unless change is explicitly intended.
