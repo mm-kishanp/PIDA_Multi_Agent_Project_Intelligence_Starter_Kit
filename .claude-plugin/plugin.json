@@ -4,10 +4,10 @@
   "version": "1.0.0",
   "description": "Evidence-based project intelligence for any repository: audit the codebase into a living knowledge base, plan work as a verifiable backlog, implement tasks with tests, review diffs, track clients, and keep docs current.",
   "author": {
-    "name": "mm-kishanp"
+    "name": "magnusminds"
   },
-  "homepage": "https://github.com/mm-kishanp/PIDA_Multi_Agent_Project_Intelligence_Starter_Kit",
-  "repository": "https://github.com/mm-kishanp/PIDA_Multi_Agent_Project_Intelligence_Starter_Kit",
+  "homepage": "https://github.com/magnusminds/PIDA_Multi_Agent_Project_Intelligence_Starter_Kit",
+  "repository": "https://github.com/magnusminds/PIDA_Multi_Agent_Project_Intelligence_Starter_Kit",
   "keywords": [
     "claude-code",
     "claude-skills",

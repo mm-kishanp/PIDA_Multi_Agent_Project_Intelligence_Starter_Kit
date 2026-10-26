@@ -144,7 +144,7 @@ class Packaging(unittest.TestCase):
 
     def test_readme_install_commands_match_manifests(self):
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
-        self.assertIn("/plugin marketplace add mm-kishanp/PIDA_Multi_Agent_Project_Intelligence_Starter_Kit", readme)
+        self.assertIn("/plugin marketplace add magnusminds/PIDA_Multi_Agent_Project_Intelligence_Starter_Kit", readme)
         self.assertIn("/plugin install pida@pida", readme)
         self.assertIn("/pida:pida-setup", readme)
 

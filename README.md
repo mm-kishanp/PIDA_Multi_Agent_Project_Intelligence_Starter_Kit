@@ -40,7 +40,7 @@ Commit or back up your work first, then pick one option. None of them overwrites
 Open Claude Code at the root of your repository and paste:
 
 ```text
-https://github.com/mm-kishanp/PIDA_Multi_Agent_Project_Intelligence_Starter_Kit
+https://github.com/magnusminds/PIDA_Multi_Agent_Project_Intelligence_Starter_Kit
 
 install PIDA into this repository
 ```
@@ -52,7 +52,7 @@ Claude follows the [agent install steps](#agent-install-steps) below: it clones 
 Installs the PIDA skills and subagents once, for every repository you open:
 
 ```text
-/plugin marketplace add mm-kishanp/PIDA_Multi_Agent_Project_Intelligence_Starter_Kit
+/plugin marketplace add magnusminds/PIDA_Multi_Agent_Project_Intelligence_Starter_Kit
 /plugin install pida@pida
 ```
 
@@ -69,7 +69,7 @@ Claude Code namespaces plugin skills, so as a plugin the commands are `/pida:pro
 Works for every agent and needs only Python 3.8 or newer (nothing to pip install):
 
 ```bash
-git clone https://github.com/mm-kishanp/PIDA_Multi_Agent_Project_Intelligence_Starter_Kit.git pida-kit
+git clone https://github.com/magnusminds/PIDA_Multi_Agent_Project_Intelligence_Starter_Kit.git pida-kit
 python pida-kit/scripts/install-pida.py --target /path/to/your-repo --tools claude
 ```
 
@@ -89,7 +89,7 @@ Combine them with commas (`--tools claude,copilot`). Add `--dry-run` to preview.
 Plain `/project-audit` in every repository, with no files added to any repository:
 
 ```bash
-git clone https://github.com/mm-kishanp/PIDA_Multi_Agent_Project_Intelligence_Starter_Kit.git pida-kit
+git clone https://github.com/magnusminds/PIDA_Multi_Agent_Project_Intelligence_Starter_Kit.git pida-kit
 cp -r pida-kit/.agents/skills/* ~/.claude/skills/
 cp pida-kit/.claude/agents/*.md ~/.claude/agents/
 ```
@@ -106,7 +106,7 @@ The skills work on their own and create the knowledge base when you run them, bu
 For an AI agent asked to "install PIDA" from a link to this repository:
 
 1. Confirm you are at the root of the user's repository (`git rev-parse --show-toplevel`) and note uncommitted changes. Do not install into this kit itself.
-2. Clone the kit to a temporary directory outside the repository: `git clone --depth 1 https://github.com/mm-kishanp/PIDA_Multi_Agent_Project_Intelligence_Starter_Kit.git <tmp>/pida-kit`.
+2. Clone the kit to a temporary directory outside the repository: `git clone --depth 1 https://github.com/magnusminds/PIDA_Multi_Agent_Project_Intelligence_Starter_Kit.git <tmp>/pida-kit`.
 3. Choose `--tools`: `claude` by default; add `copilot` or `antigravity` only if the user asked, or confirm first if the repository already has `.github/copilot-instructions.md` or `.agent/`.
 4. Preview with `python <tmp>/pida-kit/scripts/install-pida.py --target . --tools <tools> --dry-run`, then run it without `--dry-run`. Use `python3` or `py` if `python` is not found.
 5. For every file reported as `merge`, merge the kit's version into the user's file without removing or weakening any existing rule, and show the diff.

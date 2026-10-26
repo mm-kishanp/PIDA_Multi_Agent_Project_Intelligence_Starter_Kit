@@ -3,7 +3,7 @@
   "name": "pida",
   "description": "PIDA: Project Intelligence & Development Agent for Claude Code",
   "owner": {
-    "name": "mm-kishanp"
+    "name": "magnusminds"
   },
   "plugins": [
     {
@@ -11,7 +11,7 @@
       "description": "Audit any repository into an evidence-based knowledge base, plan a verifiable backlog, implement and review tasks with tests, track client-specific behavior, and keep project docs current.",
       "source": "./",
       "category": "development",
-      "homepage": "https://github.com/mm-kishanp/PIDA_Multi_Agent_Project_Intelligence_Starter_Kit"
+      "homepage": "https://github.com/magnusminds/PIDA_Multi_Agent_Project_Intelligence_Starter_Kit"
     }
   ]
 }
